@@ -1,0 +1,35 @@
+{% load static %}<nav class="navbar bg-white navbar-expand-lg border-bottom mb-2 nav">
+    <div class="container-fluid">
+      <a class="text-muted logo-text" href="/"><img width='182px' height="auto" src="{% static 'img/poolsbox.png' %}" /></a>
+      <a href="/menu" class="navbar-toggler fs-1"> ≡ </a>
+      <div class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-muted fs-6" href="/lable/Paris">Paris</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted fs-6" href="/lable/Insurance">Insurance</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted fs-6" href="/lable/Europe">Europe</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted fs-6" href="/lable/Southeast Asia">Southeast Asia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-muted fs-6" href="/lable/travel hacking">Travel hacking</a>
+          </li>
+
+
+        </ul>
+        <form class="d-flex" action="{% url "search" %}" method="GET">
+          <div class="bg-white border rounded-pill d-flex me-2">
+            <input type="text" class="form-control border-0 rounded-pill ps-3" name="query" placeholder="Search">
+            <button class="btn text-white bg-gradient-success my-1 me-1 btn-sm rounded-pill">
+             Search
+            </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </nav>

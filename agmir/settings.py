@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import os
 
 
 
@@ -33,6 +34,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,8 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-     'corsheaders',
-    'scraping'
+    'corsheaders',
+    'django_summernote',
+    'scraping',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +95,18 @@ DATABASES = {
 }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': str(os.environ.get('DB_ENGINE')),
+#         'NAME': str(os.environ.get('DB_NAME')),
+#         'USER': str(os.environ.get('DB_USER')),
+#         'PASSWORD': str(os.environ.get('DB_PASSWORD')),
+#         'HOST': str(os.environ.get('DB_HOST')),
+#         'PORT': str(os.environ.get('DB_PORT')),
+#     }
+# }
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -129,7 +144,7 @@ django_heroku.settings(locals())
 
 STATIC_URL = 'static/'
 
-import os
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
@@ -149,6 +164,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+# Summernote
+SUMMERNOTE_THEME = 'bs5'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'disableResizeEditor': True,
+    }
+}
+
+#Rest Framwork
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -158,9 +185,10 @@ REST_FRAMEWORK = {
 }
 
 
+
+
+# Cors Headers
 CORS_ORIGIN_ALLOW_ALL = True
-
-
 CORS_ORIGIN_WHITELIST = (
   'http://localhost:8000',
 )

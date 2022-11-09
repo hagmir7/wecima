@@ -1,0 +1,125 @@
+{% extends 'base.html' %}{% load static %}{% block content %}
+<div style="height: auto !important;">
+    <div class="container-lg" style="height: auto !important;">
+        <div class="row" style="height: auto !important;">
+            <div class="col-12 col-md-7 col-lg-8 col-xl-8 mb-3 m-0" style="height: auto !important;">
+                <h1 dir="auto" class="blog-post-title h4 mt-2">{{ post.title}}</h1>
+                {{ post.body|safe }}
+            </div>
+            <div class="col-12 col-md-5 col-lg-4 col-xl-4 position-relative" style="height: auto !important;">
+                <div class="position-sticky" style="top: 10px; height: auto !important;">
+                    <div class="p-2 mt-3 bg-light card shadow-sm border"><span class="fst-italic h4 p-1">Copyrights</span>
+                        <div>We respect the property rights of others, and are always careful not to infringe on their rights, so
+                            authors and publishing houses have the right to demand that an article or book download link be removed from
+                            the site. If you find an article or book of yours and do not agree to the posting of a download link, or you
+                            have a suggestion or complaint, write to us through the <a href="/contact" target="_blank">Contact Us
+                            </a>.
+                        </div>
+                        <a href="/page/copyrights-sxrmt">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            {% for post in posts %}
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <a href="/p/{{ post.id }}">
+                    {% if post.image_link == '' %}
+                    <img class="card-img-top m-0 p-0 border rounded" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" >
+                    {% else %}
+                    <img class="card-img-top m-0 p-0 border rounded lazy" data-src="{{ post.image_link }}" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" data-srcset="{{ post.image_link }}" >
+                    {% endif %}
+                </a>
+                <div class="card-body m-0 p-0 mt-2">
+                    <a class=" " href="/p/{{ post.id }}">
+                        <div class="card-title h5 my-0 py-0 text-black">{{ post.title }}</div>
+                    </a>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <span class="mr-2 h6">{{post.date|date:'M d, Y - H:i'}}</span>
+                        </small>
+                    </p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="h3 py-5 my-5 text-center">
+                OOPS! No Post ({{title}})
+            </div>
+            {% endfor %}
+            <div aria-label="Page navigation example ">
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item ">
+                        <a href="/travel" class="btn rounded-pill mx-3 px-4 text-white bg-gradient-success">Load More</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const item = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20675%20395'%3E%3C/svg%3E"
+      var lazyImages = [].slice.call(document.querySelectorAll(`[src="${item}"`));
+
+      if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              let lazyImage = entry.target;
+              if (lazyImage.hasAttribute('data-lazy-src')) {
+                 lazyImage.src = lazyImage.getAttribute('data-lazy-src');
+                  lazyImage.srcset = lazyImage.getAttribute('data-lazy-src');
+              }else{
+                lazyImage.src = lazyImage.dataset.src;
+                 lazyImage.srcset = lazyImage.dataset.srcset;
+              }
+
+
+              lazyImage.classList.remove("lazy");
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
+        });
+
+        lazyImages.forEach(function (lazyImage) {
+          lazyImageObserver.observe(lazyImage);
+        });
+      } else {
+        // Possibly fall back to event handlers here
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+  
+        if ("IntersectionObserver" in window) {
+          let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                let lazyImage = entry.target;
+                if (lazyImage.hasAttribute('data-lazy-src')) {
+                   lazyImage.src = lazyImage.getAttribute('data-lazy-src');
+                    lazyImage.srcset = lazyImage.getAttribute('data-lazy-src');
+                }else{
+                  lazyImage.src = lazyImage.dataset.src;
+                   lazyImage.srcset = lazyImage.dataset.srcset;
+                }
+  
+  
+                lazyImage.classList.remove("lazy");
+                lazyImageObserver.unobserve(lazyImage);
+              }
+            });
+          });
+  
+          lazyImages.forEach(function (lazyImage) {
+            lazyImageObserver.observe(lazyImage);
+          });
+        } else {
+          // Possibly fall back to event handlers here
+        }
+      });
+    
+  </script>
+{% endblock content %}

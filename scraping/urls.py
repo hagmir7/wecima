@@ -1,6 +1,25 @@
 from django.urls import path
-from .views import index, scraping
+from .views import *
 urlpatterns = [
     path('', index, name="home" ),
-    path('scraping', scraping)   
+    path('p/<int:id>', post ),
+    path('travel', blog ),
+    path('search', search, name="search"),
+
+
+    # Pages
+    path('page/create', createPage, name='create_page'),
+    path('pages', pages, name='pages'),
+    path('page/<slug:slug>', page, name='page'),
+    path('page/delete/<int:id>', deletePage, name='delete_page'),
+    path('page/update/<int:id>', updatePage, name='update_page'),
+
+
+
+    path('contact', contact, name='contact'),
+    path('lable/<str:lable>', lable, name='lable'),
+    path('menu', menu, name='menu'),
+
+
+    path('scraping', scraping)
 ]

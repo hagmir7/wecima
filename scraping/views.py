@@ -1,13 +1,153 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http.response import JsonResponse
 from base64 import encode
 from bs4 import BeautifulSoup
 import requests
-from .models import Post
+from . models import Post, Page, Contact
+from django.core.paginator import Paginator
+from . forms import CreateContact, FormCreatePage
+from django.contrib import messages
 
-
+# Home page
 def index(request):
-    return render(request, 'index.html')
+    posts = Post.objects.all().order_by('-date')[0:24]
+    context = {'posts': posts, 'title': "PoolsBox Travel Site"}
+    return render(request, 'index.html', context)
+
+#Travel page
+def blog(request):
+    content = Post.objects.all().order_by('-date')
+    paginator = Paginator(content, 24) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    context = {'posts': posts, 'title': "PoolsBox Travel Site"}
+    return render(request, 'blog.html', context)
+
+# Post detail
+def post(request, id):
+    post = get_object_or_404(Post, id=id)
+    post.views = post.views + 1
+    post.save()
+    posts = Post.objects.all().order_by('-date')[0:3]
+    context = {'title': post.title, 'post': post, 'posts': posts}
+    return render(request, 'post.html', context)
+
+
+def search(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        title = Post.objects.filter(title__icontains=query)
+        description = Post.objects.filter(description__icontains=query)
+        posts = title | description
+        context = {'posts': posts, 'title': f'Search for {query}'}
+        return render(request, 'search.html', context)
+    else:
+        return redirect('/')
+
+
+
+# ------------------------ Page Views ----------------------
+
+def page(request, slug):
+    page = get_object_or_404(Page, slug=slug)
+    return render(request, 'page/page.html', {'page': page, "title": page.title})
+
+
+def pages(request):
+    pages = Page.objects.all().order_by('created')
+    return render(request, 'page/list.html', {'pages': pages, "title": "Pages"})
+
+def createPage(request):
+    form = FormCreatePage()
+    if request.method == 'POST' and request.user.is_superuser:
+        form = FormCreatePage(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('pages')
+    context = {"form": form}
+    return render(request, 'page/create.html', context)
+
+
+def updatePage(request, id):
+    page = Page.objects.get(id=id)
+    form = FormCreatePage(instance=page)
+    if request.method == 'POST' and request.user.is_superuser:
+        form = FormCreatePage(request.POST, instance=page)
+        if form.is_valid():
+            form.save()
+            return redirect('pages')
+    context = {"form": form}
+    return render(request, 'page/update.html', context)
+
+def deletePage(request, id):
+    page = Page.objects.get(id=id)
+    if request.user.is_superuser:
+        operation = page.delete()
+        if operation:
+            messages.success(request, 'Page deleted successfully.')
+            return redirect('pages')
+
+        else:
+            messages.warning(request, 'Page deleted failde ')
+            return redirect('pages')
+
+    return redirect('home')
+
+
+def lable(request, lable):
+    posts = Post.objects.filter(title__icontains=lable)
+    context = {"posts": posts, 'title': f"{lable} - PoolsBox"}
+    return render(request, 'lable.html', context)
+
+def menu(request):
+    context = {'title': 'Menu - PoolsBox'}
+    return render(request, 'menu.html', context)
+
+
+def contact(request):
+    form = CreateContact()
+    if request.method == "POST":
+        form = CreateContact(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'The message has been sent successfully')
+            return redirect('contact')
+    context = {'form':form,'title':'PoolsBox - Contace'}
+    return render(request, 'contact/contact.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def getItem(url):
