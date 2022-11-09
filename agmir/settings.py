@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^**+rax&k(yu6-tigx18t4aelw##t^5pm(z@l1h06he*l*f)_$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -87,24 +87,24 @@ WSGI_APPLICATION = 'agmir.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': str(os.environ.get('DB_ENGINE')),
-#         'NAME': str(os.environ.get('DB_NAME')),
-#         'USER': str(os.environ.get('DB_USER')),
-#         'PASSWORD': str(os.environ.get('DB_PASSWORD')),
-#         'HOST': str(os.environ.get('DB_HOST')),
-#         'PORT': str(os.environ.get('DB_PORT')),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': str(os.environ.get('DB_ENGINE')),
+        'NAME': str(os.environ.get('DB_NAME')),
+        'USER': str(os.environ.get('DB_USER')),
+        'PASSWORD': str(os.environ.get('DB_PASSWORD')),
+        'HOST': str(os.environ.get('DB_HOST')),
+        'PORT': str(os.environ.get('DB_PORT')),
+    }
+}
 
 
 # Password validation
