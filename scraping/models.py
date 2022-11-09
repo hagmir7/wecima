@@ -9,10 +9,10 @@ from django.utils.crypto import get_random_string
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=150)
+    title = models.TextField(max_length=150)
     category = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(upload_to='Image',null=True, blank=True)
-    image_link = models.CharField(max_length=2000,null=True, blank=True)
+    image_link = models.TextField(max_length=2000,null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     views = models.IntegerField(default=0)
     tags = models.CharField(max_length=100, null=True, blank=True)
