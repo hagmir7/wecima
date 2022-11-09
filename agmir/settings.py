@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-^**+rax&k(yu6-tigx18t4aelw##t^5pm(z@l1h06he*l*f)_$
 DEBUG = str(os.environ.get('DEBUG')) == "1"
 
 ALLOWED_HOSTS = ['travle.up.railway.app', 'www.poolsbox.com', 'travel.freewsad.com', "https://travle.up.railway.app"]
-CSRF_TRUSTED_ORIGINS=['travle.up.railway.app', 'www.poolsbox.com', 'travel.freewsad.com', "https://travle.up.railway.app"]
+CSRF_TRUSTED_ORIGINS=['https://www.poolsbox.com', 'https://travel.freewsad.com', "https://travle.up.railway.app"]
 
 
 # Application definition
@@ -191,8 +191,8 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
   'http://localhost:8000',
-  'travle.up.railway.app',
-  'www.poolsbox.com',
-  'travel.freewsad.com',
-  'https://travle.up.railway.app'
+#   'travle.up.railway.app',
+#   'www.poolsbox.com',
+#   'travel.freewsad.com',
+#   'https://travle.up.railway.app'
 )
