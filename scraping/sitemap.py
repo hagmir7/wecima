@@ -13,7 +13,7 @@ class StaticViewSitemap(Sitemap):
 
 
 class PostsSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "daily"
     priority = 0.5
     def items(self):
         return Post.objects.all()

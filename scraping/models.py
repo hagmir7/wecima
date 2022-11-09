@@ -22,7 +22,8 @@ class Post(models.Model):
     slug = models.SlugField(null=True, blank=True, max_length=200)
     is_public = models.BooleanField(default=True)
 
-
+    def get_absolute_url(self):
+        return f'/p/{self.slug}'
 
     def __str__(self):
         return self.title

@@ -61,8 +61,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
+
+SITE_ID=1
 
 ROOT_URLCONF = 'agmir.urls'
 
