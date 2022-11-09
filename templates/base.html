@@ -1,16 +1,18 @@
-{% load static %}
-<!doctype html>
+{% load static %}<!doctype html>
 <html lang="en-US">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{title|slice:'60'}}</title>
-  <meta name="keywords" content="{{tags}}, travel, nature, travelphotography, photography, love, photooftheday, instagood, travelgram, picoftheday, instagram, beautiful, photo, wanderlust, naturephotography, adventure, art, travelblogger, instatravel, landscape, like, summer, explore, trip, vacation, follow, traveling, ig, bhfyp, happy, fashion">
+  <meta name="keywords"
+    content="{{tags}}, travel, nature, travelphotography, photography, love, photooftheday, instagood, travelgram, picoftheday, instagram, beautiful, photo, wanderlust, naturephotography, adventure, art, travelblogger, instatravel, landscape, like, summer, explore, trip, vacation, follow, traveling, ig, bhfyp, happy, fashion">
   <link rel='canonical' href='{{ request.path }}' />
-  <meta name="description" content="{% if description %} {{ description|slice:'158' }} {% else %}Travel industry is a reliable source for breaking news from the US and around the world, destination information, hotel headlines, cruise itineraries, and more.{% endif %}" />
+  <meta name="description"
+    content="{% if description %} {{ description|slice:'158' }} {% else %}Travel industry is a reliable source for breaking news from the US and around the world, destination information, hotel headlines, cruise itineraries, and more.{% endif %}" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:title" content="{{ title|slice:'60' }}" />
-  <meta property="og:description" content="{% if description %} {{ description|slice:'158' }} {% else %}Travel industry is a reliable source for breaking news from the US and around the world, destination information, hotel headlines, cruise itineraries, and more.{% endif %}" />
+  <meta property="og:description"
+    content="{% if description %} {{ description|slice:'158' }} {% else %}Travel industry is a reliable source for breaking news from the US and around the world, destination information, hotel headlines, cruise itineraries, and more.{% endif %}" />
   <meta property="og:url" content="https://www.poolsbox.com{{ request.path }}" />
   <meta property="og:site_name" content="PoolsBox Travel Site" />
   <meta property="article:publisher" content="https://hassan-agmir.freewsad.com" />
@@ -18,6 +20,7 @@
   <meta property="og:image" content="{% if image %}{{ image }}{% else %}{% static 'img/bp.png' %} {% endif %}" />
   <meta property="og:image:width" content="1350" />
   <meta property="og:image:height" content="790" />
+  <meta property="og:type" content="article" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta name="author" content="@PoolsBox" />
   <meta name="twitter:creator" content="@PoolsBox" />
@@ -27,41 +30,58 @@
   <meta name="twitter:label2" content="Est. reading time" />
   <meta name="twitter:data2" content="8 minutes" />
   <meta name="author" content="www.poolsbox.com">
-  {% if request.path != '/' %}<meta property="og:type" content="article" />
+  {% if request.path != '/' %}
+  <meta property="og:type" content="article" />
   <meta property="article:published_time" content="{{ date }}" />{% endif %}
-   <!-- theme -->
-   <meta name="theme-color" content="#2dce89" />
-   <!-- Favicon -->
+  <!-- theme -->
+  <meta name="theme-color" content="#2dce89" />
+  <!-- Favicon -->
   <link rel="icon" href='{% static "img/bp.png" %}' type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    nav {
-      box-shadow: -1px 1px 2px, ded5d5a8;
-    }
-    a{
-      text-decoration: none;
-    }
-
-    .size-full{
-      margin-bottom: 12px;
-    }
-
-    .bg-gradient-success {
-      background-image: linear-gradient(310deg,#2dce89,#2dcecc);
-  }
-  p img{
-    width: 100%!important;
-    height: auto!important;
-  }
-  </style>
+  <style>nav{box-shadow:-1px 1px 2px,ded5d5a8}a{text-decoration:none}.cover{background-image:url('{% static "img/cover.jpg" %}');background-size:cover;background-position:bottom;width:100%;height:500px;opacity:.7}.cover img{object-fit:cover}.size-full{margin-bottom:12px}.bg-gradient-success{background-image:linear-gradient(310deg,#2dce89,#2dcecc)}p img{width:100%!important;height:auto!important}</style>
 </head>
 
 <body class="bg-light">
   {% include 'components/header.html' %}
   {% block content %}{% endblock content %}
   {% include 'components/footer.html' %}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+<script>
+  function lazyLoader(value){
+    document.addEventListener("DOMContentLoaded", function () {
+    var lazyImages = [].slice.call(document.querySelectorAll(value));
 
+    if ("IntersectionObserver" in window) {
+      let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            let lazyImage = entry.target;
+            if (lazyImage.hasAttribute('data-lazy-src')) {
+               lazyImage.src = lazyImage.getAttribute('data-lazy-src');
+                lazyImage.srcset = lazyImage.getAttribute('data-lazy-src');
+            }else{
+              lazyImage.src = lazyImage.dataset.src;
+               lazyImage.srcset = lazyImage.dataset.srcset;
+            }
+            lazyImage.classList.remove("lazy");
+            lazyImageObserver.unobserve(lazyImage);
+          }
+        });
+      });
+
+      lazyImages.forEach(function (lazyImage) {
+        lazyImageObserver.observe(lazyImage);
+      });
+    } else {
+      // Possibly fall back to event handlers here
+    }
+  });
+  }
+
+  lazyLoader("img.lazy")
+  const item = "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20675%20395'%3E%3C/svg%3E"
+  lazyLoader(`[src="${item}"`)
+</script>
 </body>
 
 </html>

@@ -4,12 +4,11 @@
         {% for post in posts %}
         <div class="col-12 col-md-6 col-lg-4 mb-3">
             <a href="/p/{{ post.slug }}">
-                {% if post.image_link == '' %}
-                <img class="card-img-top m-0 p-0 border rounded" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" >
-                {% else %}
-                <img class="card-img-top m-0 p-0 border rounded lazy" data-src="{{ post.image_link }}" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" data-srcset="{{ post.image_link }}" >
-
-                {% endif %}
+              {% if post.image_link == '' %}
+              <img class="card-img-top m-0 p-0 border rounded" alt={{ post.title }} title={{ post.title }}  width="100%" height="auto" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" >
+              {% else %}
+              <img class="card-img-top m-0 p-0 border rounded lazy" alt={{ post.title }} width="100%" title={{ post.title }} height="auto" data-src="{{ post.image_link }}" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" data-srcset="{{ post.image_link }}" >
+              {% endif %}
             </a>
             <div class="card-body m-0 p-0 mt-2">
                 <a class=" " href="/p/{{ post.slug }}">
@@ -45,37 +44,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-
-      if ("IntersectionObserver" in window) {
-        let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              let lazyImage = entry.target;
-              if (lazyImage.hasAttribute('data-lazy-src')) {
-                 lazyImage.src = lazyImage.getAttribute('data-lazy-src');
-                  lazyImage.srcset = lazyImage.getAttribute('data-lazy-src');
-              }else{
-                lazyImage.src = lazyImage.dataset.src;
-                 lazyImage.srcset = lazyImage.dataset.srcset;
-              }
-
-
-              lazyImage.classList.remove("lazy");
-              lazyImageObserver.unobserve(lazyImage);
-            }
-          });
-        });
-
-        lazyImages.forEach(function (lazyImage) {
-          lazyImageObserver.observe(lazyImage);
-        });
-      } else {
-        // Possibly fall back to event handlers here
-      }
-    });
-  </script>
 {% endblock content %}

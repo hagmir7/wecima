@@ -29,7 +29,7 @@ def post(request, slug):
     post.views = post.views + 1
     post.save()
     posts = Post.objects.all().order_by('-date')[0:3]
-    context = {'title': post.title, 'post': post, 'posts': posts}
+    context = {'title': post.title, 'post': post, 'posts': posts, 'date': post.date}
     return render(request, 'post.html', context)
 
 
