@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-^**+rax&k(yu6-tigx18t4aelw##t^5pm(z@l1h06he*l*f)_$
 DEBUG = str(os.environ.get('DEBUG')) == "1"
 
 ALLOWED_HOSTS = ['travle.up.railway.app', 'www.poolsbox.com', 'travel.freewsad.com', "https://travle.up.railway.app"]
-
+CSRF_TRUSTED_ORIGINS=['travle.up.railway.app', 'www.poolsbox.com', 'travel.freewsad.com', "https://travle.up.railway.app"]
 
 
 # Application definition
