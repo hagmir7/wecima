@@ -24,8 +24,8 @@ def blog(request):
     return render(request, 'blog.html', context)
 
 # Post detail
-def post(request, id):
-    post = get_object_or_404(Post, id=id)
+def post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     post.views = post.views + 1
     post.save()
     posts = Post.objects.all().order_by('-date')[0:3]
@@ -43,8 +43,6 @@ def search(request):
         return render(request, 'search.html', context)
     else:
         return redirect('/')
-
-
 
 # ------------------------ Page Views ----------------------
 
