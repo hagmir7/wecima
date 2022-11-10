@@ -26,10 +26,24 @@ def blog(request):
 # Post detail
 def post(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    posts = Post.objects.all().order_by('-date')[0:3]
+    # Add new viewer
     post.views = post.views + 1
     post.save()
-    posts = Post.objects.all().order_by('-date')[0:3]
-    context = {'title': post.title, 'post': post, 'posts': posts, 'date': post.date}
+
+    description = post.description if post.description else False 
+    
+
+
+    context = {
+    'title': post.title,
+    'post': post,
+    'posts': posts, 
+    'date': post.date,
+    'image': post.image_link,
+    'tags': post.tags,
+    'description': description
+    }
     return render(request, 'post.html', context)
 
 
@@ -44,6 +58,15 @@ def search(request):
     else:
         return redirect('/')
 
+
+#Travel page
+def postList(request):
+    content = Post.objects.all().order_by('-views')
+    paginator = Paginator(content, 24) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    context = {'posts': posts, 'title': "PoolsBox Travel Site"}
+    return render(request, 'post/list.html', context)
 # ------------------------ Page Views ----------------------
 
 def page(request, slug):
@@ -182,7 +205,7 @@ def getItem(url):
 
 def scraping(request):
     for page in range(1, 77):
-        url = f"https://www.nomadicmatt.com/travel-blog/page/{page}/"
+        url = f"https://www.disneytouristblog.com/page/{page}/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "html.parser")
         results = soup.find_all("article")

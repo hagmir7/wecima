@@ -16,6 +16,10 @@ urlpatterns = [
 
 
 
+    path('post/list/', postList, name='post-list'),
+
+
+
     path('contact', contact, name='contact'),
     path('lable/<str:lable>', lable, name='lable'),
     path('menu', menu, name='menu'),
