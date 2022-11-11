@@ -20,11 +20,13 @@
             {% for post in posts %}
             <div class="col-12 col-md-6 col-lg-4 mb-3">
                 <a href="/p/{{ post.slug }}">
-                  {% if post.image_link == '' %}
-                  <img class="card-img-top m-0 p-0 border rounded" alt="{{ post.title }}" title="{{ post.title }}"  width="100%" height="auto" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" >
-                  {% else %}
-                  <img class="card-img-top m-0 p-0 border rounded lazy" alt="{{ post.title }}" width="100%" title="{{ post.title }}" height="auto" data-src="{{ post.image_link }}" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" data-srcset="{{ post.image_link }}" >
-                  {% endif %}
+                    <div class="img-content">
+                        {% if post.image_link == '' %}
+                        <img class="card-img-top m-0 p-0 border rounded" alt="{{ post.title }}" title="{{ post.title }}"  width="100%" height="auto" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" >
+                        {% else %}
+                        <img class="card-img-top m-0 p-0 border rounded lazy" alt="{{ post.title }}" width="100%" title="{{ post.title }}" height="auto" data-src="{{ post.image_link }}" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" data-srcset="{{ post.image_link }}" >
+                        {% endif %}
+                    </div>
                 </a>
                 <div class="card-body m-0 p-0 mt-2">
                     <a class=" " href="/p/{{ post.slug }}">

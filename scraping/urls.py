@@ -25,5 +25,6 @@ urlpatterns = [
     path('menu', menu, name='menu'),
 
 
-    path('scraping', scraping)
+    path('scraping', scraping),
+    path('scraping2', scraping2)
 ]

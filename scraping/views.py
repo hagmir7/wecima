@@ -10,7 +10,7 @@ from django.contrib import messages
 
 # Home page
 def index(request):
-    posts = Post.objects.all().order_by('-date')[0:24]
+    posts = Post.objects.all().order_by('date')[0:24]
     context = {'posts': posts, 'title': "PoolsBox Travel Site"}
     return render(request, 'index.html', context)
 
@@ -224,4 +224,87 @@ def scraping(request):
                 Post.objects.create(title=str(title), image_link=str(image), body=str(getItem(link)).replace('<body', '<article'))
                 print("not exists...")
             print(link)
+    return JsonResponse({'message': 'Scraping successfully...'})
+
+
+
+
+
+
+
+
+
+def getItem(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    article = soup.find("div", class_='entry-content')
+    
+
+    spans = len(article.find_all('span', class_="isc-source-text"))
+    figcaption = len(article.find_all('figcaption'))
+    divs = len(article.find_all('div'))
+
+    
+
+    
+    for item in range(0, spans):
+        article.find('span', class_="isc-source-text").decompose()
+
+    for item in range(0, figcaption):
+        article.find('figcaption').decompose()
+    for item in range(0, divs):
+        try:
+            article.find('div').decompose()
+        except:
+            pass
+
+
+
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+    # article.find('div').decompose()
+
+
+
+    article = str(article).replace('<div', "<article")
+    article = str(article).replace('</div', "</article")
+    article = str(article).replace('www.thecrazytourist.com','www.poolsbox.com')
+    return article
+
+
+def scraping2(request):
+    for page in range(1, 469):
+        url = f"https://www.thecrazytourist.com/page/{page}/"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, "html.parser")
+        results = soup.find_all("article")
+        for item in results:
+            title = item.find('a').text
+            try:
+                image = item.find('img')['src']
+            except:
+                image = ''
+            
+            link = item.find('a')['href']
+            category = item.find_all('a')[3].text
+            try:
+                tags = item.find_all('a')[4].text
+            except:
+                tags = ''
+            description = item.find('p').text[0:159]
+            # Post detail scraping
+            if not Post.objects.filter(title=title).exists():
+                Post.objects.create(title=str(title), category=str(category), tags=str(tags), description=str(description), image_link=str(image), body=str(getItem(link)))
+                print("not exists...")
+                print(link)
+
     return JsonResponse({'message': 'Scraping successfully...'})
