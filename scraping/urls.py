@@ -1,5 +1,10 @@
 from django.urls import path
-from .views import *
+from . views import *
+from .sites.theplanetd import theplanetd
+from .sites.tourscanner import tourscanner
+
+
+
 urlpatterns = [
     path('', index, name="home" ),
     path('p/<slug:slug>', post ),
@@ -23,8 +28,14 @@ urlpatterns = [
     path('contact', contact, name='contact'),
     path('lable/<str:lable>', lable, name='lable'),
     path('menu', menu, name='menu'),
+    path('urls', postURL),
+
+
+    path('delete-all', deleteAll),
 
 
     path('scraping', scraping),
-    path('scraping2', scraping2)
+    path('scraping2', scraping2),
+    path('theplanetd', theplanetd),
+    path('tourscanner', tourscanner)
 ]

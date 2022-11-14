@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% block content %}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8 card mt-3 shadow-sm">
+            <textarea class="form-control mt-3" name="urls" id="urls" cols="30" rows="40">
+            {% for post in posts %}https://www.poolsbox.com/p/{{ post.slug }}&#13; {% endfor %}
+
+            </textarea>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

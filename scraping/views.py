@@ -20,7 +20,7 @@ def blog(request):
     paginator = Paginator(content, 24) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)
-    context = {'posts': posts, 'title': "PoolsBox Travel Site"}
+    context = {'posts': posts, 'title': "Travel - PoolsBox Travel Site"}
     return render(request, 'blog.html', context)
 
 # Post detail
@@ -139,6 +139,24 @@ def contact(request):
 
 
 
+def postURL(request):
+    posts = Post.objects.all()
+    context = {'posts': posts}
+    return render(request, 'urls.html', context)
+
+
+
+
+
+
+def deleteAll(request):
+    posts= Post.objects.all()
+    for post in posts:
+        post.delete()
+    return redirect('/')
+
+
+
 
 
 
@@ -230,7 +248,7 @@ def scraping(request):
 
 
 
-
+proxy ={"http": "http://10.122.45.114:8080", "https": "http://10.122.45.114:8080"}
 
 
 
@@ -257,21 +275,7 @@ def getItem(url):
             article.find('div').decompose()
         except:
             pass
-
-
-
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
-    # article.find('div').decompose()
+    
 
 
 
@@ -282,11 +286,12 @@ def getItem(url):
 
 
 def scraping2(request):
-    for page in range(1, 469):
+    for page in range(290, 469):
         url = f"https://www.thecrazytourist.com/page/{page}/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "html.parser")
         results = soup.find_all("article")
+        print(f"Page = {page}")
         for item in results:
             title = item.find('a').text
             try:
@@ -295,7 +300,10 @@ def scraping2(request):
                 image = ''
             
             link = item.find('a')['href']
-            category = item.find_all('a')[3].text
+            try:
+                category = item.find_all('a')[3].text
+            except:
+                category = ''
             try:
                 tags = item.find_all('a')[4].text
             except:
@@ -304,7 +312,7 @@ def scraping2(request):
             # Post detail scraping
             if not Post.objects.filter(title=title).exists():
                 Post.objects.create(title=str(title), category=str(category), tags=str(tags), description=str(description), image_link=str(image), body=str(getItem(link)))
-                print("not exists...")
-                print(link)
+                print("Not exists...")
+            print(link)
 
     return JsonResponse({'message': 'Scraping successfully...'})
