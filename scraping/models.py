@@ -13,7 +13,7 @@ class Post(models.Model):
     title = models.CharField(null=True, blank=True, max_length=200)
     category = models.CharField(blank=True, null=True, max_length=50)
     image = models.ImageField(upload_to='Image',null=True, blank=True)
-    image_link = models.TextField(null=True, blank=True)
+    image_link = models.CharField(null=True, blank=True, max_length=700)
     description = models.TextField(null=True, blank=True)
     views = models.IntegerField(default=0)
     tags = models.CharField(max_length=100, null=True, blank=True)
@@ -35,6 +35,12 @@ class Post(models.Model):
             self.slug = slugify(self.title)
 
         super(Post, self).save(*args, **kwargs)
+    
+    def next(self):
+        return self.get_next_by_date()
+
+    def pre(self):
+        return self.get_previous_by_date()
 
 
 

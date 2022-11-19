@@ -8,6 +8,7 @@ from .sites.tourscanner import tourscanner
 urlpatterns = [
     path('', index, name="home" ),
     path('p/<slug:slug>', post ),
+    path('p/<slug:slug>/', post ),
     path('travel', blog ),
     path('search', search, name="search"),
 
@@ -22,6 +23,7 @@ urlpatterns = [
 
 
     path('post/list/', postList, name='post-list'),
+    path('post/update/<int:id>', updatePost, name="update_post"),
 
 
 

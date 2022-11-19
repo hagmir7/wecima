@@ -17,3 +17,11 @@ class CreateContact(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ('__all__')
+
+
+class PostForm(forms.ModelForm):
+    body = forms.CharField(widget=SummernoteWidget(attrs={'data-user-id': 123456, 'data-device': 'iphone'}))
+    class Meta:
+        model = Post
+        fields = ("title", 'category',  "description", 'image', 'image_link', 'tags', 'body')
+

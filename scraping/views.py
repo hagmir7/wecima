@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 from . models import Post, Page, Contact
 from django.core.paginator import Paginator
-from . forms import CreateContact, FormCreatePage
+from . forms import CreateContact, FormCreatePage, PostForm
 from django.contrib import messages
 
 # Home page
@@ -45,6 +45,22 @@ def post(request, slug):
     'description': description
     }
     return render(request, 'post.html', context)
+
+
+def updatePost(request, id):
+    post = get_object_or_404(Post, id=id)
+    form = PostForm(instance=post)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Post updated successfully.")
+            return redirect(f'/p/{post.slug}')
+    context = {
+        'post': post,
+        'form': form
+    }
+    return render(request, 'post/update.html', context)
 
 
 def search(request):
