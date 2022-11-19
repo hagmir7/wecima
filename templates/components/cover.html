@@ -1,5 +1,27 @@
-{% load static %}<div class="d-none d-md-block">
-    <div class="cover rounded my-3 d-flex justify-content-center algin-items-center ">
+{% load static %}
+{% block  script %}
+<script>
+    let covers = [
+        '{% static "img/travel-1.webp" %}',
+        '{% static "img/travel-2.webp" %}',
+        '{% static "img/travel-3.webp" %}',
+        '{% static "img/travel-4.webp" %}',
+    ]
+
+    let number = 3
+    setInterval(() => {
+        let element = document.querySelector('.cover');
+        element.style.backgroundImage = `url('${covers[number]}')`
+        number == (covers.length - 1) ? number = 0 : number = number + 1
+        console.log('error')
+    }, 10000)
+</script>
+{% endblock %}
+
+
+
+<div class="d-none d-md-block">
+    <div class="cover rounded my-3 d-flex justify-content-center algin-items-center" style="background-image: url('{% static "img/travel-2.webp" %}');" >
         <div class="w-100 m-auto text-center ">
             <h1 class="text-white">Travel Smarter, Cheaper, Longer</h1>
             <h2 class="text-white h3">Where do you want to go?</h2>

@@ -42,7 +42,8 @@ def post(request, slug):
     'date': post.date,
     'image': post.image_link,
     'tags': post.tags,
-    'description': description
+    'description': description,
+    'article' : True
     }
     return render(request, 'post.html', context)
 
