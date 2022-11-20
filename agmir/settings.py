@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-
+import django_heroku
 
 
 
@@ -155,10 +155,10 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
 
 # STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-
+django_heroku.settings(locals())
 # Media files
 
 MEDIA_URL = '/media/'
