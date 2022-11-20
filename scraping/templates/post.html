@@ -4,12 +4,32 @@
         <div class="row" style="height: auto !important;">
             <div class="col-12 col-md-7 col-lg-8 col-xl-8 mb-3 m-0 overflow-hidden" style="height: auto !important;">
                 <h1 dir="auto" class="blog-post-title h4 mt-2">{{ post.title}}</h1>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert text-white p-2 bg-gradient-success">{{message}}</div>
+                {% endfor %}
+                {% endif %}
                 {{ post.body|safe }}
-                {% if user.authenticated   %}
-                <div>
+                {% if user.is_superuser   %}
+                <div class="mb-3">
+                    <a class="btn btn-danger text-white me-2 rounded-pill bg-gradient-warnign" onclick="return confirm('Are you sur you want to delete Post.')" href="/post/delete/{{ post.id }}">Delete</a>
                     <a class="btn  rounded-pill bg-gradient-success text-white" href="{% url 'update_post' post.id %}">Update</a>
                 </div>
                 {% endif %}
+                <div class="d-flex {% if post.next %} justify-content-between {% else %} justify-content-end {% endif %}">
+                    {% if post.next %}
+                    <div>
+                        <a href="/p/{{post.next.slug}}">← Previose </a><br>
+                         <a href="/p/{{post.next.slug}}">{{ post.next.title|truncatechars:50 }}</a>
+                    </div>
+                    {% endif %}
+                    {% if post.pre %}
+                    <div class="text-end">
+                        <a href="/p/{{post.pre.slug}}">Next → </a><br>
+                        <a href="/p/{{post.pre.slug}}">{{ post.pre.title|truncatechars:50}}</a>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
             <div class="col-12 col-md-5 col-lg-4 col-xl-4 position-relative" style="height: auto !important;">
                 <div class="position-sticky" style="top: 10px; height: auto !important;">

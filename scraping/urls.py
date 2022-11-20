@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('post/list/', postList, name='post-list'),
     path('post/update/<int:id>', updatePost, name="update_post"),
+    path('post/delete/<int:id>', deletePost, name='delete_post'),
 
 
 

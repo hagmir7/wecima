@@ -10,7 +10,7 @@ from django.contrib import messages
 
 # Home page
 def index(request):
-    posts = Post.objects.all().order_by('date')[0:24]
+    posts = Post.objects.all().order_by('-date')[0:24]
     context = {'posts': posts, 'title': "PoolsBox Travel Site"}
     return render(request, 'index.html', context)
 
@@ -64,13 +64,24 @@ def updatePost(request, id):
     return render(request, 'post/update.html', context)
 
 
+def deletePost(request, id):
+    if request.user.is_superuser :
+        post = Post.objects.get(id=id)
+        slug = str(post.next().slug)
+        post.delete()
+        messages.success(request, 'Post Deleted Succesfully..')
+        return redirect(f'/p/{slug}')
+    else:
+        return redirect('/')
+
+
 def search(request):
     if request.method == 'GET':
         query = request.GET.get('query')
         title = Post.objects.filter(title__icontains=query)
         description = Post.objects.filter(description__icontains=query)
         posts = title | description
-        context = {'posts': posts, 'title': f'Search for {query}'}
+        context = {'posts': posts, 'title': f'Search for {query}', 'query': query}
         return render(request, 'search.html', context)
     else:
         return redirect('/')

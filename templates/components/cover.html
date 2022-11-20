@@ -1,8 +1,8 @@
 {% load static %}
 <div class="d-none d-md-block">
-    <div class="cover rounded my-3 d-flex justify-content-center algin-items-center" style="background-image: url('{% static "img/travel-1.webp" %}');" >
+    <div class="cover rounded my-3 d-flex justify-content-center algin-items-center" >
         <div class="w-100 m-auto text-center ">
-            <h1 class="text-white">Travel Smarter, Cheaper, Longer</h1>
+            <h1 class="text-white">Poolsbox Travel Smarter, Cheaper, Longer</h1>
             <h2 class="text-white h3">Where do you want to go?</h2>
             <div class="header-search">
                 <form action="{% url "search" %}" method="GET" class="d-flex w-50 m-auto">
@@ -10,15 +10,6 @@
                     <input type="submit" value="Search" class="btn btn-success rounded-pill mx-2 shadow">
                 </form>
             </div>
-            <p class="mt-4 shadow">
-                <span class="text-white mt-3">
-                    <a class="text-white" href="/lable/Southeast Asia">Southeast Asia</a>,
-                     <a class="text-white" href="/lable/Europe">Europe</a>,
-                      <a class="text-white" href="/lable/travel hacking">travel hacking</a>,
-                      <a class="text-white" href="/lable/Insurance">Insurance</a>,
-                      <a class="text-white" href="/lable/Paris">Paris</a>
-                </span>
-            </p>
         </div>
         <!-- <img src='{% static "img/cover.jpg" %}' height="100%" width="100%" alt=""> -->
     </div>

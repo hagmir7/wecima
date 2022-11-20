@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import django_heroku
 import os
 
 
@@ -20,7 +19,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+# DEBUG_PROPAGATE_EXCEPTIONS = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -31,7 +30,7 @@ SECRET_KEY = 'django-insecure-^**+rax&k(yu6-tigx18t4aelw##t^5pm(z@l1h06he*l*f)_$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1"
 
-ALLOWED_HOSTS = ['travle.up.railway.app', 'www.poolsbox.com', 'travel.freewsad.com', "https://travle.up.railway.app"]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.poolsbox.com']
 CSRF_TRUSTED_ORIGINS=['https://www.poolsbox.com', 'https://travel.freewsad.com', "https://travle.up.railway.app"]
 
 
@@ -143,8 +142,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Configure Django App for Heroku.
-django_heroku.settings(locals())
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
