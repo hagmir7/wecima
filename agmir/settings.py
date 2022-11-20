@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
+
 
 
 
@@ -90,30 +90,29 @@ WSGI_APPLICATION = 'agmir.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 DATABASES = {
     'default': {
-        'ENGINE': str(os.environ.get('DB_ENGINE')),
-        'NAME': str(os.environ.get('DB_NAME')),
-        'USER': str(os.environ.get('DB_USER')),
-        'PASSWORD': str(os.environ.get('DB_PASSWORD')),
-        'HOST': str(os.environ.get('DB_HOST')),
-        'PORT': str(os.environ.get('DB_PORT')),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': str(os.environ.get('DB_ENGINE')),
+#         'NAME': str(os.environ.get('DB_NAME')),
+#         'USER': str(os.environ.get('DB_USER')),
+#         'PASSWORD': str(os.environ.get('DB_PASSWORD')),
+#         'HOST': str(os.environ.get('DB_HOST')),
+#         'PORT': str(os.environ.get('DB_PORT')),
+#     }
+# }
+
+
 # Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -132,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -144,9 +142,6 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-
 STATIC_URL = 'static/'
 
 
@@ -156,17 +151,14 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
-# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-django_heroku.settings(locals())
+
 # Media files
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
@@ -183,8 +175,7 @@ SUMMERNOTE_CONFIG = {
 
 #Rest Framwork
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
+
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
@@ -197,8 +188,4 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
   'http://localhost:8000',
-#   'travle.up.railway.app',
-#   'www.poolsbox.com',
-#   'travel.freewsad.com',
-#   'https://travle.up.railway.app'
 )
