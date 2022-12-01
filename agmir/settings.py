@@ -16,7 +16,7 @@ DEBUG = str(os.environ.get('DEBUG')) == "1"
 DEBUG_PROPAGATE_EXCEPTIONS = str(os.environ.get('DEBUG_PROPAGATE_EXCEPTIONS')) == "1"
 
 # Allwed Hosts
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.poolsbox.com', 'www.poolsbox.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.poolsbox.com', 'poolsbox.up.railway.app']
 CSRF_TRUSTED_ORIGINS=['https://www.poolsbox.com', 'https://travel.freewsad.com', "https://travle.up.railway.app", 'https://www.poolsbox.up.railway.app']
 
 
