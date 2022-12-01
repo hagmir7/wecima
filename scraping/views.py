@@ -47,6 +47,15 @@ def post(request, slug):
     }
     return render(request, 'post.html', context)
 
+def createPost(request):
+    form = PostForm()
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Post created successfully.')
+            return redirect(f"/p/{form.slug}")
+    return render(request, 'post/update.html', {'form', form})
 
 def updatePost(request, id):
     post = get_object_or_404(Post, id=id)
