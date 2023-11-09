@@ -1,0 +1,51 @@
+{% extends "base-dash.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10 card shadow-sm mt-3">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                  <tr>
+                    <th scope="row">{{user.id}}</th>
+                    <td><a href="/p/{{ user.slug }}">{{ user.first_name }} {{ user.last_name }}</a></td>
+                    <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                    <td>{{ user.date_joined|date:"M. d,Y" }}</td>
+                    <td class="d-flex">
+                        <a class="btn mx-1 btn-sm btn-danger" href="/user/delete/{{user.id}}" onclick="return alert('Are you sur you want to delete')">Delete</a>
+                        <a class="btn mx-1 btn-sm btn-success" href="/user/update/{{user.id}}">Update</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <div aria-label="Page navigation example ">
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="list-group-item">
+                        {% if users.has_previous %}
+                        <a href="?page={{ users.previous_page_number }}"
+                            class="btn btn-success rounded-pill mx-3 px-4">&#x2190;</a>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        {% if users.has_next %}
+                        <a href="?page={{ users.next_page_number }}"
+                            class="btn btn-success rounded-pill mx-3 px-4">&#x2192;</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

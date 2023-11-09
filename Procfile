@@ -1,1 +1,0 @@
-web: gunicorn agmir.wsgi

@@ -13,7 +13,6 @@ class Post(models.Model):
     title = models.CharField(null=True, blank=True, max_length=200)
     category = models.CharField(blank=True, null=True, max_length=50)
     image = models.ImageField(upload_to='Image',null=True, blank=True)
-    image_link = models.CharField(null=True, blank=True, max_length=700)
     description = models.TextField(null=True, blank=True)
     views = models.IntegerField(default=0)
     tags = models.CharField(max_length=100, null=True, blank=True)
@@ -69,8 +68,43 @@ class Contact(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     body = models.TextField()
+    readed = models.DateTimeField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+
 
 
     def __str__(self):
         return self.name
+    
+
+
+
+class Link(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.CharField(max_length=500)
+    footer = models.BooleanField(null=True, blank=True)
+    header = models.BooleanField(null=True, blank=True)
+    new_tab = models.BooleanField(null=True, blank=True, default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+class Settings(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=150)
+    description = models.CharField(max_length=400)
+    tags = models.CharField(max_length=200)
+    logo = models.ImageField(upload_to='Logos')
+
+
+    cover = models.ImageField(upload_to='Covers')
+    cover_title = models.CharField(max_length=100)
+    cover_description = models.CharField(max_length=150)
+
+
+    def __str__(self):
+        return self.name
+    

@@ -6,7 +6,7 @@
             <h2 class="text-white h3">Where do you want to go?</h2>
             <div class="header-search">
                 <form action="{% url "search" %}" method="GET" class="d-flex w-50 m-auto">
-                    <input placeholder="Search poolsbox.com" type="search" name="query" id="search" class="form-control rounded-pill m-auto">
+                    <input placeholder="Search {{ request.get_host }}" type="search" name="query" id="search" class="form-control rounded-pill m-auto">
                     <input type="submit" value="Search" class="btn btn-success rounded-pill mx-2 shadow">
                 </form>
             </div>

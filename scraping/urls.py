@@ -7,6 +7,7 @@ from .sites.tourscanner import tourscanner
 
 urlpatterns = [
     path('', index, name="home" ),
+    path('dashboard', dashobard, name="dashobard"),
     path('p/<slug:slug>', post ),
     path('p/<slug:slug>/', post ),
     path('travel', blog ),
@@ -19,6 +20,11 @@ urlpatterns = [
     path('page/<slug:slug>', page, name='page'),
     path('page/delete/<int:id>', deletePage, name='delete_page'),
     path('page/update/<int:id>', updatePage, name='update_page'),
+
+    path('users', users, name="users"),
+    path('contact/list', contactList),
+    path('contact/delete/<int:id>', contactDelete),
+    path('contact/read/<int:id>', contactRead),
 
 
 

@@ -1,33 +1,44 @@
-{% extends "base.html" %}
+{% extends "base-dash.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-10 card mt-3">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for page in pages %}
-                  <tr>
-                    <th scope="row">{{page.id}}</th>
-                    <td><a href="/page/{{page.slug}}">{{page.title}}</a></td>
-                    <td>{{page.created}}</td>
-                    <td class="d-flex">
-                        <a class="btn mx-1 btn-sm btn-danger" href="/page/delete/{{page.id}}" onclick="return alert('Are you sur you want to delete')">Delete</a>
-                        <a class="btn mx-1 btn-sm btn-success" href="/page/update/{{page.id}}">Update</a>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-10 card shadow-sm mt-3">
+        <div class="py-2">
+            <a class="btn btn-success" href="/page/create">New page</a>
         </div>
     </div>
-</div>
+    <div class="col-md-10 card shadow-sm">
+      <table class="table table-hover my-0">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for page in pages %}
+          <tr>
+            <th scope="row">{{page.id}}</th>
+            <td><a href="/page/{{page.slug}}">{{page.title}}</a></td>
+            <td>{{page.created}}</td>
+            <td class="d-flex">
+              <a class="btn mx-1 btn-sm btn-danger" href="/page/delete/{{page.id}}"
+                onclick="return alert('Are you sur you want to delete')">Delete</a>
+              <a class="btn mx-1 btn-sm btn-success" href="/page/update/{{page.id}}">Update</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% if not pages %}
+        <div class="text-center py-3">
+          <h5>No pages</h5>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
 {% endblock %}

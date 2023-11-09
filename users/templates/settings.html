@@ -1,0 +1,87 @@
+{% extends 'dash.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+ <main id="main" class="main">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8 ">
+            <h1 class="h4">Personal</h1>
+            <ul class="list-group list-group-numbered text-dark">
+                <li class="list-group-item d-flex">
+                    <a href="{% url 'profile_update' user.id %}">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-user mr-2"></span>
+                                <strong>{% trans "Profile" %}</strong>
+                            </div>
+                            {% trans "Change your Avatar, Phone, Country..." %}
+                        </div>
+                    </a>
+                </li>
+                <li class="list-group-item d-flex">
+                    <a href="{% url 'user_update_info' %}">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-suitcase mr-2"></span>
+                                <strong>{% trans "Contact Info" %}</strong>
+                            </div>
+                            {% trans "Change your Username, Email..." %}
+                        </div>
+                    </a>
+                </li>
+                <li class="list-group-item d-flex">
+                    <a href="{% url 'change_password' %}">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-lock mr-2"></span>
+                                <strong>{% trans "Password" %}</strong></div>
+                            {% trans "Change your password." %}
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-8 mt-3">
+            <h1 class="h4">Configuration</h1>
+            <ul class="list-group list-group-numbered text-dark">
+                <li class="list-group-item d-flex">
+                    <a href="/cover/update">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-user mr-2"></span>
+                                <strong>{% trans "Update cover" %}</strong>
+                            </div>
+                            {% trans "Cover image, title, description..." %}
+                        </div>
+                    </a>
+                </li>
+                <li class="list-group-item d-flex">
+                    <a href="/site/update">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-suitcase mr-2"></span>
+                                <strong>{% trans "Site info" %}</strong>
+                            </div>
+                            {% trans "Site logo, name, description..." %}
+                        </div>
+                    </a>
+                </li>
+                <li class="list-group-item d-flex">
+                    <a href="/links">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-lock mr-2"></span>
+                                <strong>{% trans "Links" %}</strong></div>
+                            {% trans "Links footer, header..." %}
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+ </main>
+
+
+{% endblock content %}

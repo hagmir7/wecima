@@ -16,7 +16,7 @@ DEBUG = str(os.environ.get('DEBUG')) == "1"
 DEBUG_PROPAGATE_EXCEPTIONS = str(os.environ.get('DEBUG_PROPAGATE_EXCEPTIONS')) == "1"
 
 # Allwed Hosts
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://travel.freewsad.com/', 'poolsbox.up.railway.app']
+ALLOWED_HOSTS = ["*"]
 
 
 
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_summernote',
     'scraping',
+    'users'
 ]
 
 # Applicationn Millelware
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'agmir.context_processors.context_data',
             ],
         },
     },
@@ -78,28 +80,41 @@ WSGI_APPLICATION = 'agmir.wsgi.application'
 
 
 # Database
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+}    
 
-else:
+CPANEL = str(os.environ.get('CPANEL')) == '1'
+
+if CPANEL:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+  
+
+
     DATABASES = {
         'default': {
-            'ENGINE': str(os.environ.get('DB_ENGINE')),
-            'NAME': str(os.environ.get('DB_NAME')),
-            'USER': str(os.environ.get('DB_USER')),
-            'PASSWORD': str(os.environ.get('DB_PASSWORD')),
-            'HOST': str(os.environ.get('DB_HOST')),
-            'PORT': str(os.environ.get('DB_PORT')),
+            'ENGINE': os.environ.get("DB_ENGINE"),
+            'NAME': os.environ.get("DB_NAME"),
+            'USER': os.environ.get("DB_USER"),
+            'PASSWORD': os.environ.get("DB_PASSWORD"),
+            'HOST': os.environ.get("DB_HOST"),  # Typically 'localhost' or '127.0.0.1'
+            'PORT': os.environ.get("DB_PORT"),  # Typically '3306'
+            'OPTIONS': {
+                'sql_mode': 'STRICT_TRANS_TABLES',
+                'charset': 'utf8mb4',
+                'use_unicode': True,
+            },
         }
     }
 
 
 # Password validation
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -160,6 +175,10 @@ REST_FRAMEWORK = {
     ]
 }
 
+
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, 'fixtures'),
+]
 
 
 

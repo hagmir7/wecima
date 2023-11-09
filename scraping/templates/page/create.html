@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base-dash.html" %}
 
 {% block content %}
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="col-md-6 card shadow-sm">
+        <div class="col-md-8 card shadow-sm">
             <h1 class="h4 my-3">Create Page</h1>
             <form method="POST" enctype="multipart/form-data" class="my-3">
                 {% csrf_token %}

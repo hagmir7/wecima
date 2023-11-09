@@ -7,12 +7,27 @@ from . models import Post, Page, Contact
 from django.core.paginator import Paginator
 from . forms import CreateContact, FormCreatePage, PostForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 # Home page
 def index(request):
     posts = Post.objects.all().order_by('-date')[0:24]
     context = {'posts': posts, 'title': "PoolsBox Travel Site"}
     return render(request, 'index.html', context)
+
+def dashobard(request):
+    posts = Post.objects.filter(is_public=True).order_by('-date')
+    users = User.objects.all()
+    contacts = Contact.objects.filter(readed=None)
+    pages = Page.objects.all()
+    context = {
+        'posts': posts,
+        'users': users,
+        'contacts': contacts,
+        'pages': pages,
+        'title': "Dashobard"
+    }
+    return render(request, 'dash.html', context)
 
 #Travel page
 def blog(request):
@@ -40,7 +55,7 @@ def post(request, slug):
     'post': post,
     'posts': posts, 
     'date': post.date,
-    'image': post.image_link,
+    'image': post.image.url if post.image else False,
     'tags': post.tags,
     'description': description,
     'article' : True
@@ -50,12 +65,13 @@ def post(request, slug):
 def createPost(request):
     form = PostForm()
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Post created successfully.')
             return redirect(f"/p/{form.slug}")
-    return render(request, 'post/update.html', {'form', form})
+    return render(request, 'post/update.html', {'form': form})
+
 
 def updatePost(request, id):
     post = get_object_or_404(Post, id=id)
@@ -64,6 +80,8 @@ def updatePost(request, id):
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
+            post.is_public = False
+            post.save()
             messages.success(request,"Post updated successfully.")
             return redirect(f'/p/{post.slug}')
     context = {
@@ -94,11 +112,55 @@ def search(request):
         return render(request, 'search.html', context)
     else:
         return redirect('/')
+    
 
+
+#Travel page
+def users(request):
+    content = User.objects.all().order_by('-date_joined')
+    paginator = Paginator(content, 24) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    users = paginator.get_page(page_number)
+    context = {'users': users, 'title': "All user"}
+    return render(request, 'users/list.html', context)
+
+
+def contactList(request):
+    content = Contact.objects.all().order_by('-date')
+    paginator = Paginator(content, 24) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    contacts = paginator.get_page(page_number)
+    context = {'contacts': contacts, 'title': "New contacts"}
+    return render(request, 'contact/list.html', context)
+
+
+def contactDelete(request, id):
+    contact = get_object_or_404(Contact, id=id)
+    contact.delete()
+    messages.success(request, "Contact deleted successfully.")
+    return redirect(request.META.get('HTTP_REFERER'))
+
+import datetime
+
+def contactRead(request, id):
+    contact = get_object_or_404(Contact, id=id)
+    contact.readed = datetime.datetime.now()
+    contact.save()
+    messages.success(request, "Contact readed successfully.")
+    return redirect(request.META.get('HTTP_REFERER'))
 
 #Travel page
 def postList(request):
     content = Post.objects.all().order_by('-views')
+    paginator = Paginator(content, 24) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    context = {'posts': posts, 'title': "Public posts"}
+    return render(request, 'post/list.html', context)
+
+
+def PendingPosts(request):
+    content = Post.objects.filter(is_public=False).order_by('-views')
     paginator = Paginator(content, 24) # Show 25 contacts per page.
     page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)
@@ -276,7 +338,7 @@ def scraping(request):
 
             # Post detail scraping
             if not Post.objects.filter(title=title).exists():
-                Post.objects.create(title=str(title), image_link=str(image), body=str(getItem(link)).replace('<body', '<article'))
+                Post.objects.create(title=str(title), body=str(getItem(link)).replace('<body', '<article'))
                 print("not exists...")
             print(link)
     return JsonResponse({'message': 'Scraping successfully...'})
@@ -348,7 +410,7 @@ def scraping2(request):
             description = item.find('p').text[0:159]
             # Post detail scraping
             if not Post.objects.filter(title=title).exists():
-                Post.objects.create(title=str(title), category=str(category), tags=str(tags), description=str(description), image_link=str(image), body=str(getItem(link)))
+                Post.objects.create(title=str(title), category=str(category), tags=str(tags), description=str(description), body=str(getItem(link)))
                 print("Not exists...")
             print(link)
 

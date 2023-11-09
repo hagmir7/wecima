@@ -15,6 +15,7 @@ sitemaps = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('scraping.urls')),
+    path('', include('users.urls')),
     path('api/', include('rest_framework.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('robots.txt', include('robots.urls')),
