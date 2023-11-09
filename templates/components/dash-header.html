@@ -10,16 +10,16 @@
                 <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
                     <div class="position-relative">
                          <i class="align-middle" data-feather="message-square"></i>
-                        <span class="indicator">{{contacts.count}}</span>
+                        <span class="indicator">{{messages.count}}</span>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
                     <div class="dropdown-menu-header">
-                        {{contacts.count}} New messages
+                        {{messages.count}} New messages
                     </div>
                     <div class="list-group">
 
-                        {% for contact in contacts %}
+                        {% for contact in messages %}
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">

@@ -3,11 +3,21 @@ from django.http.response import JsonResponse
 from base64 import encode
 from bs4 import BeautifulSoup
 import requests
+from django.contrib.auth.decorators import user_passes_test
 from . models import Post, Page, Contact
 from django.core.paginator import Paginator
 from . forms import CreateContact, FormCreatePage, PostForm
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
+from django.utils.translation import gettext as _
+
+
+
+def superuser_required(user):
+    if not user.is_superuser:
+        raise PermissionDenied
+    return True
 
 # Home page
 def index(request):
@@ -15,6 +25,9 @@ def index(request):
     context = {'posts': posts, 'title': "PoolsBox Travel Site"}
     return render(request, 'index.html', context)
 
+
+
+@user_passes_test(superuser_required)
 def dashobard(request):
     posts = Post.objects.filter(is_public=True).order_by('-date')
     users = User.objects.all()
@@ -62,6 +75,9 @@ def post(request, slug):
     }
     return render(request, 'post.html', context)
 
+
+
+@user_passes_test(superuser_required)
 def createPost(request):
     form = PostForm()
     if request.method == "POST":
@@ -73,6 +89,8 @@ def createPost(request):
     return render(request, 'post/update.html', {'form': form})
 
 
+
+@user_passes_test(superuser_required)
 def updatePost(request, id):
     post = get_object_or_404(Post, id=id)
     form = PostForm(instance=post)
@@ -90,7 +108,7 @@ def updatePost(request, id):
     }
     return render(request, 'post/update.html', context)
 
-
+@user_passes_test(superuser_required)
 def deletePost(request, id):
     if request.user.is_superuser :
         post = Post.objects.get(id=id)
@@ -115,7 +133,8 @@ def search(request):
     
 
 
-#Travel page
+#Get all users
+@user_passes_test(superuser_required)
 def users(request):
     content = User.objects.all().order_by('-date_joined')
     paginator = Paginator(content, 24) # Show 25 contacts per page.
@@ -125,6 +144,7 @@ def users(request):
     return render(request, 'users/list.html', context)
 
 
+@user_passes_test(superuser_required)
 def contactList(request):
     content = Contact.objects.all().order_by('-date')
     paginator = Paginator(content, 24) # Show 25 contacts per page.
@@ -133,7 +153,7 @@ def contactList(request):
     context = {'contacts': contacts, 'title': "New contacts"}
     return render(request, 'contact/list.html', context)
 
-
+@user_passes_test(superuser_required)
 def contactDelete(request, id):
     contact = get_object_or_404(Contact, id=id)
     contact.delete()
@@ -142,6 +162,8 @@ def contactDelete(request, id):
 
 import datetime
 
+
+@user_passes_test(superuser_required)
 def contactRead(request, id):
     contact = get_object_or_404(Contact, id=id)
     contact.readed = datetime.datetime.now()
@@ -150,6 +172,7 @@ def contactRead(request, id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 #Travel page
+@user_passes_test(superuser_required)
 def postList(request):
     content = Post.objects.all().order_by('-views')
     paginator = Paginator(content, 24) # Show 25 contacts per page.
@@ -158,7 +181,7 @@ def postList(request):
     context = {'posts': posts, 'title': "Public posts"}
     return render(request, 'post/list.html', context)
 
-
+@user_passes_test(superuser_required)
 def PendingPosts(request):
     content = Post.objects.filter(is_public=False).order_by('-views')
     paginator = Paginator(content, 24) # Show 25 contacts per page.
@@ -172,11 +195,13 @@ def page(request, slug):
     page = get_object_or_404(Page, slug=slug)
     return render(request, 'page/page.html', {'page': page, "title": page.title})
 
-
+@user_passes_test(superuser_required)
 def pages(request):
     pages = Page.objects.all().order_by('created')
     return render(request, 'page/list.html', {'pages': pages, "title": "Pages"})
 
+
+@user_passes_test(superuser_required)
 def createPage(request):
     form = FormCreatePage()
     if request.method == 'POST' and request.user.is_superuser:
@@ -187,7 +212,7 @@ def createPage(request):
     context = {"form": form}
     return render(request, 'page/create.html', context)
 
-
+@user_passes_test(superuser_required)
 def updatePage(request, id):
     page = Page.objects.get(id=id)
     form = FormCreatePage(instance=page)
@@ -199,6 +224,8 @@ def updatePage(request, id):
     context = {"form": form}
     return render(request, 'page/update.html', context)
 
+
+@user_passes_test(superuser_required)
 def deletePage(request, id):
     page = Page.objects.get(id=id)
     if request.user.is_superuser:
@@ -245,9 +272,7 @@ def postURL(request):
 
 
 
-
-
-
+@user_passes_test(superuser_required)
 def deleteAll(request):
     posts= Post.objects.all()
     for post in posts:

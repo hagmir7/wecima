@@ -1,9 +1,9 @@
 {% load static %}
 <div class="d-none d-md-block">
-    <div class="cover rounded my-3 d-flex justify-content-center algin-items-center" >
+    <div class="cover rounded my-3 d-flex justify-content-center algin-items-center" style="background-image: url({{ settings.cover.url }});">
         <div class="w-100 m-auto text-center ">
-            <h1 class="text-white">Poolsbox Travel Smarter, Cheaper, Longer</h1>
-            <h2 class="text-white h3">Where do you want to go?</h2>
+            <h1 class="text-white">{{ settings.cover_title }}</h1>
+            <h2 class="text-white h3">{{ settings.cover_description }}</h2>
             <div class="header-search">
                 <form action="{% url "search" %}" method="GET" class="d-flex w-50 m-auto">
                     <input placeholder="Search {{ request.get_host }}" type="search" name="query" id="search" class="form-control rounded-pill m-auto">

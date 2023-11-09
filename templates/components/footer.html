@@ -4,10 +4,11 @@
             <div class="col-md-12 text-center">
                 <div class="footer-heading mt-3"><a href="/" class="logo h5 fs-5 text-muted">{{ request.get_host }}</a></div>
                 <p class="menu d-flex justify-content-center mt-3 flex-wrap fs-5">
-                    <a href="/" class="nav-link text-muted mx-2">Home</a>
-                    <a href="/page/privacy-policy-nkrru" class="nav-link text-muted mx-2">Privacy Policy</a>
-                    <a href="/page/about-us-eyere" class="nav-link text-muted mx-2">About</a>
-                    <a href="/contact" class="nav-link text-muted mx-2">Contact</a>
+
+                    {% for link in footer %}
+                     <a href="{{ link.url }}" {% if link.new_tab %}target="_blank"{% endif %} class="nav-link text-muted mx-2">{{ link.name }}</a>
+                    {% endfor %}
+                   
                 </p>
             </div>
         </div>

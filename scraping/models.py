@@ -95,14 +95,14 @@ class Link(models.Model):
 class Settings(models.Model):
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=150)
-    description = models.CharField(max_length=400)
+    description = models.TextField()
     tags = models.CharField(max_length=200)
     logo = models.ImageField(upload_to='Logos')
 
 
     cover = models.ImageField(upload_to='Covers')
     cover_title = models.CharField(max_length=100)
-    cover_description = models.CharField(max_length=150)
+    cover_description = models.TextField(max_length=150)
 
 
     def __str__(self):

@@ -5,4 +5,6 @@ from .models import *
 admin.site.register(Post)
 admin.site.register(Page)
 admin.site.register(Contact)
+admin.site.register(Link)
+admin.site.register(Settings)
 

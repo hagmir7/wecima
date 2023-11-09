@@ -1,27 +1,14 @@
 {% load static %}<header class="navbar bg-white navbar-expand-lg border-bottom mb-2 nav">
     <div class="container-fluid">
-      <a class="text-muted logo-text" href="/"><img src="{% static 'img/poolsbox.webp' %}" width='182px' height="auto" title="PoolsBox best travel site" alt="PoolsBox travel site" /></a>
+      <a class="text-muted logo-text" href="/"><img src="{{ settings.logo.url }}" width='auto' height="41px" title="PoolsBox best travel site" alt="PoolsBox travel site" /></a>
       <a href="/menu" class="navbar-toggler fs-1"> ≡ </a>
       <nav class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-muted fs-6" href="/travel">Travel</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted fs-6" href="/lable/Paris">Paris</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted fs-6" href="/lable/Insurance">Insurance</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted fs-6" href="/lable/Europe">Europe</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted fs-6" href="/lable/Hawaii">Hawaii</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-muted fs-6" href="/lable/Morocco">Morocco</a>
-          </li>
+          {% for link in links %}
+            <li class="nav-item">
+              <a class="nav-link text-muted fs-6" {% if link.new_tab %}target="_blank"{% endif %} href="{{ link.url }}">{{ link.name }}</a>
+            </li>
+          {% endfor %}
         </ul>
         <form class="d-flex" action="{% url "search" %}" method="GET">
           <div class="bg-white border rounded-pill d-flex me-2">
@@ -31,8 +18,13 @@
             </button>
             </div>
         </form>
-
+      {% if user.is_authenticated  %}
+        <a class="btn btn-info btn-sm rounded-pill text-white px-3" href="/dashboard">Dashboard</a>
+      {% else %}
         <a class="btn btn-info btn-sm rounded-pill text-white px-3" href="{% url 'login' %}">Join</a>
+      {% endif %}
       </nav>
     </div>
   </header>
+
+{{ DEBUG }}
