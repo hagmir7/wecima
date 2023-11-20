@@ -85,7 +85,7 @@ def createPost(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Post created successfully.')
-            return redirect(f"/p/{form.slug}")
+            return redirect(request.META.get('HTTP_REFERER'))
     return render(request, 'post/update.html', {'form': form})
 
 
