@@ -83,31 +83,31 @@ WSGI_APPLICATION = "agmir.wsgi.application"
 # Database
 
 
-if CPANEL:
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = True
-    DATABASES = {
-        "default": {
-            "ENGINE": os.environ.get("DB_ENGINE"),
-            "NAME": os.environ.get("DB_NAME"),
-            "USER": os.environ.get("DB_USER"),
-            "PASSWORD": os.environ.get("DB_PASSWORD"),
-            "HOST": os.environ.get("DB_HOST"),  # Typically 'localhost' or '127.0.0.1'
-            "PORT": os.environ.get("DB_PORT"),  # Typically '3306'
-            "OPTIONS": {
-                "sql_mode": "STRICT_TRANS_TABLES",
-                "charset": "utf8mb4",
-                "use_unicode": True,
-            },
-        }
+# if CPANEL:
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("DB_ENGINE"),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),  # Typically 'localhost' or '127.0.0.1'
+        "PORT": os.environ.get("DB_PORT"),  # Typically '3306'
+        "OPTIONS": {
+            "sql_mode": "STRICT_TRANS_TABLES",
+            "charset": "utf8mb4",
+            "use_unicode": True,
+        },
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
 
 
 # Password validation
