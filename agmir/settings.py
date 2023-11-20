@@ -81,12 +81,6 @@ WSGI_APPLICATION = "agmir.wsgi.application"
 
 
 # Database
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 if CPANEL:
@@ -105,6 +99,13 @@ if CPANEL:
                 "charset": "utf8mb4",
                 "use_unicode": True,
             },
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
