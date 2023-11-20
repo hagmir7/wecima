@@ -1,6 +1,11 @@
 {% load static %}<header class="navbar bg-white navbar-expand-lg border-bottom mb-2 nav">
     <div class="container-fluid">
-      <a class="text-muted logo-text" href="/"><img src="{{ settings.logo.url }}" width='auto' height="41px" title="PoolsBox best travel site" alt="PoolsBox travel site" /></a>
+      <a class="text-muted logo-text" href="/">
+        {% if settings.logo %}
+          <img src="{{ settings.logo.url }}" width='auto' height="41px" title="{{ settings.description }}" alt="{{ settings.description }}" /></a>
+        {% else %}
+          <img src="{% static 'img/poolsbox.webp' %}" width='auto' height="41px" title="{{ settings.description }}" alt="{{ settings.description }}" /></a>
+        {% endif %}
       <a href="/menu" class="navbar-toggler fs-1"> ≡ </a>
       <nav class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">

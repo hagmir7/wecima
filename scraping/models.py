@@ -97,10 +97,10 @@ class Settings(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
     tags = models.CharField(max_length=200)
-    logo = models.ImageField(upload_to='Logos')
+    logo = models.ImageField(upload_to='Logos', null=True, blank=True)
 
 
-    cover = models.ImageField(upload_to='Covers')
+    cover = models.ImageField(upload_to='Covers', null=True, blank=True)
     cover_title = models.CharField(max_length=100)
     cover_description = models.TextField(max_length=150)
 

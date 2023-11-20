@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from scraping.models import Contact, Link, Settings
+from django.conf import settings as setting
 
 
 def context_data(request):
@@ -12,6 +13,7 @@ def context_data(request):
         'messages': messages,
         'footer' : footer,
         'header' : header,
-        'settings' : settings
+        'settings' : settings,
+        'cpanel' : setting.CPANEL
         }
     
