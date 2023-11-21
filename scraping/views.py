@@ -52,7 +52,7 @@ def blog(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    context = {"posts": posts, "title": "Travel - PoolsBox Travel Site"}
+    context = {"posts": posts, "title": "Travel - Mery Livre Travel Site"}
     return render(request, "blog.html", context)
 
 
@@ -189,7 +189,7 @@ def PendingPosts(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    context = {"posts": posts, "title": "PoolsBox Travel Site"}
+    context = {"posts": posts, "title": "Mery Livre Travel Site"}
     return render(request, "post/list.html", context)
 
 
@@ -294,12 +294,12 @@ def deletePage(request, id):
 
 def lable(request, lable):
     posts = Post.objects.filter(title__icontains=lable)
-    context = {"posts": posts, "title": f"{lable} - PoolsBox"}
+    context = {"posts": posts, "title": f"{lable} - Mery Livre"}
     return render(request, "lable.html", context)
 
 
 def menu(request):
-    context = {"title": "Menu - PoolsBox"}
+    context = {"title": "Menu - Mery Livre"}
     return render(request, "menu.html", context)
 
 
@@ -311,7 +311,7 @@ def contact(request):
             form.save()
             messages.success(request, "The message has been sent successfully")
             return redirect("contact")
-    context = {"form": form, "title": "PoolsBox - Contace"}
+    context = {"form": form, "title": "Mery Livre - Contace"}
     return render(request, "contact/contact.html", context)
 
 
@@ -412,7 +412,7 @@ def getItem(url):
 
     article = str(article).replace("<div", "<article")
     article = str(article).replace("</div", "</article")
-    article = str(article).replace("www.thecrazytourist.com", "www.poolsbox.com")
+    article = str(article).replace("www.thecrazytourist.com", "www.Mery Livre.com")
     return article
 
 
