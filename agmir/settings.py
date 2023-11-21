@@ -156,14 +156,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Summernote
-SUMMERNOTE_THEME = "bs5"
+
+
+# Summernot Configuration
+SUMMERNOTE_THEME = "bs4"  # set the Summernote theme
+SUMMERNOTE_CONFIG = {
+    "width": "100%",
+    "height": "400px",
+}  # set the Summernote configuration options
+
+
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-SUMMERNOTE_CONFIG = {
-    "summernote": {
-        "disableResizeEditor": True,
-    }
-}
 
 # Rest Framwork
 REST_FRAMEWORK = {
