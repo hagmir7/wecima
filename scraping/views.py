@@ -4,9 +4,9 @@ from base64 import encode
 from bs4 import BeautifulSoup
 import requests
 from django.contrib.auth.decorators import user_passes_test
-from .models import Post, Page, Contact
+from .models import *
 from django.core.paginator import Paginator
-from .forms import CreateContact, FormCreatePage, PostForm
+from .forms import CreateContact, FormCreatePage, PostForm, LinkForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
@@ -22,7 +22,11 @@ def superuser_required(user):
 # Home page
 def index(request):
     posts = Post.objects.all().order_by("-date")[0:24]
-    context = {"posts": posts, "title": "PoolsBox Travel Site"}
+    settings = Settings.objects.last()
+    context = {
+        "posts": posts,
+        "title": settings if settings.title else "Blog Website Create by Freesad.com",
+    }
     return render(request, "index.html", context)
 
 
@@ -226,6 +230,50 @@ def updatePage(request, id):
             return redirect("pages")
     context = {"form": form}
     return render(request, "page/update.html", context)
+
+
+@user_passes_test(superuser_required)
+def links(request):
+    content = Link.objects.all().order_by("-created_at")
+    paginator = Paginator(content, 24)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    links = paginator.get_page(page_number)
+
+    context = {"links": links, "title": "Configuration links"}
+    return render(request, "configuration/links/list.html", context)
+
+
+@user_passes_test(superuser_required)
+def create_link(request):
+    if request.method == "POST":
+        form = LinkForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Link created successfully..")
+            return redirect(request.META.get("HTTP_REFERER"))
+    messages.warning(request, "Fail to created link.")
+    return redirect(request.META.get("HTTP_REFERER"))
+
+
+@user_passes_test(superuser_required)
+def link_delete(request, id):
+    link = get_object_or_404(Link, id=id)
+    if link:
+        link.delete()
+        messages.success(request, "Link deleted successfully..")
+        return redirect(request.META.get("HTTP_REFERER"))
+    messages.warning(request, "Fail to delete link.")
+    return redirect(request.META.get("HTTP_REFERER"))
+
+
+@user_passes_test(superuser_required)
+def cover(request):
+    return render(request, "configuration/cover/update.html")
+
+
+@user_passes_test(superuser_required)
+def site_setings(request):
+    return render(request, "configuration/cover/settings.html")
 
 
 @user_passes_test(superuser_required)

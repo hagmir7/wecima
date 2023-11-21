@@ -1,0 +1,88 @@
+{% extends "base-dash.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row ">
+        <div class="card shadow-sm">
+            {% for message in messages  %}
+                {{ message.text }}
+            {% endfor %}
+            <form action="{% url "create_link" %}" method="POST" enctype="multipart/form-data" class="my-3">
+                {% csrf_token %}
+                <div class="row">
+                   <div class="col-md-4">
+                    <label for="name"><strong>Name</strong></label>
+                    <input type="text" name="name" class="form-control" placeholder="Name" maxlength="100" required>
+                   </div>
+                    <div class="col-md-4">
+                        <label for="url"><strong>Url</strong></label>
+                        <input type="text" name="url" class="form-control" placeholder="Url" maxlength="500" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""><strong>Display in </strong>:</label>
+                    <div>
+                        <input type="checkbox" id="header" name="header" class="form-checkbox">
+                        <label for="header">Header</label>
+                    </div>
+                    <div class="">
+                        <input type="checkbox" id="footer" name="footer" class="form-checkbox">
+                        <label for="footer">Footer</label>
+                    </div>
+                    </div>
+                </div>
+                <button class="btn btn-success mt-2">Create</button>
+            </form>
+            <table class="table">
+                <thead>
+                    {% if links %}
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Url</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    {% endif %}
+                </thead>
+                <tbody>
+                    {% for link in links %}
+                     <tr>
+                        <th scope="row">{{ link.id }}</th>
+                        <td>{{ link.name }}</td>
+                        <td>{{ link.url|truncatechars:100 }}</td>
+                        <td class="d-flex">
+                            <a class="btn mx-1 btn-sm btn-danger" href="{% url "link_delete" link.id %}"onclick="return alert('Are you sur you want to delete')">Delete</a>
+                            <a class="btn mx-1 btn-sm btn-success" href="/link/update/{{ link.id }}">Update</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tfooter>
+                        <h2 class="text-center py-4">No Links</h2>
+                    </tfooter>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="pagination pb-3">
+                <span class="step-links">
+                    {% if links.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ links.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ links.number }} of {{ links.paginator.num_pages }}.
+                    </span>
+            
+                    {% if links.has_next %}
+                    <a href="?page={{ links.next_page_number }}">next</a>
+                    <a href="?page={{ links.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

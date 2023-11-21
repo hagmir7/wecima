@@ -47,7 +47,7 @@
             <h1 class="h4">Configuration</h1>
             <ul class="list-group list-group-numbered text-dark">
                 <li class="list-group-item d-flex">
-                    <a href="/cover/update">
+                    <a href="{% url "cover" %}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-user mr-2"></span>
@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="list-group-item d-flex">
-                    <a href="/site/update">
+                    <a href="{% url "site_setings" %}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-suitcase mr-2"></span>
@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li class="list-group-item d-flex">
-                    <a href="/links">
+                    <a href="{% url "links" %}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-lock mr-2"></span>
