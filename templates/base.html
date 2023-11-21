@@ -7,7 +7,7 @@
   <meta name="keywords" content="{% if tags %} {{tags}} {% else %} {{settings.tags}} {% endif %}">
   <meta name="description" content="{% if description %} {{ description|slice:'158' }} {% else %}{{ settings.description }}{% endif %}" />
   <link rel='canonical' href='https://{{ request.get_host }}{{ request.path }}' />
-  <link rel="icon" href='{% static "img/pb.webp" %}' type="image/webp">
+  <link rel="icon" href='{% if settings.logo %} {{settings.logo.url }} {% else %} {% static "img/pb.webp" %} {% endif %}' type="image/webp">
   <meta property="image" content="{% if image %}{{ image }}{% else %}{% static 'img/pb.webp' %} {% endif %}" />
   <meta name="author" content="">
   <meta name="theme-color" content="#2dce89" />
