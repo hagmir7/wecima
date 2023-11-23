@@ -11,13 +11,18 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
-
+from django.views import View
 
 def superuser_required(user):
     if not user.is_superuser:
         raise PermissionDenied
     return True
 
+
+
+class AdsView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'ads.txt')
 
 # Home page
 def index(request):

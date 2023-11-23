@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from scraping.sitemap import PostsSitemap, StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
+from scraping.views import AdsView
 
 sitemaps = {
     "static": StaticViewSitemap,
@@ -13,6 +14,7 @@ sitemaps = {
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("ads.txt", AdsView.as_view()),
     path("", include("scraping.urls")),
     path("", include("users.urls")),
     path("api/", include("rest_framework.urls")),
