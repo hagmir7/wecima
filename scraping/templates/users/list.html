@@ -23,7 +23,7 @@
                     <td>{{ user.date_joined|date:"M. d,Y" }}</td>
                     <td class="d-flex">
                         <a class="btn mx-1 btn-sm btn-danger" href="/user/delete/{{user.id}}" onclick="return alert('Are you sur you want to delete')">Delete</a>
-                        <a class="btn mx-1 btn-sm btn-success" href="/user/update/{{user.id}}">Update</a>
+                        {% comment %} <a class="btn mx-1 btn-sm btn-success" href="/user/update/{{user.id}}">Update</a> {% endcomment %}
                     </td>
                   </tr>
                   {% endfor %}

@@ -9,15 +9,15 @@
   <meta name="description" content="{% if description %} {{ description|slice:'158' }} {% else %}{{ settings.description|slice:"169" }}{% endif %}" />
   <link rel='canonical' href='{{ request.scheme }}://{{ request.get_host }}{{ request.path }}' />
   <link rel="icon" href='{% if settings.favicon %} {{settings.favicon.url }} {% else %} {% static "img/favicon-32x32.png" %} {% endif %}' type="image/png">
-  <meta property="image" content="{% if image %}{{ image }}{% else %} {% if setting.logo %} {{setting.logo.url}} {% endif %}{% endif %}" />
-  <meta name="author" content="{{ setting.name }}">
-  <meta name="theme-color" content="{{ setting.theme_color }}" />
+  <meta property="image" content="{% if image %}{{ image }}{% else %} {% if settings.logo %} {{settings.logo.url}} {% endif %}{% endif %}" />
+  <meta name="author" content="{{ settings.name }}">
+  <meta name="theme-color" content="{{ settings.theme_color }}" />
   <!-- Open graph -->
   <meta property="og:title" content="{{ title|slice:'60' }}" />
   <meta property="og:description" content="{% if description %} {{ description|slice:'158' }} {% else %}{{ settings.description|slice:"169" }}{% endif %}" />
   <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
   <meta property="og:site_name" content="{{ settings.name }}" />
-  <meta property="og:image" content="{% if image %}{{ image }}{% else %} {% if setting.logo %} {{setting.logo.url}} {% endif %}{% endif %}" />
+  <meta property="og:image" content="{% if image %}{{ image }}{% else %} {% if settings.logo %} {{settings.logo.url}} {% endif %}{% endif %}" />
   <meta property="og:image:width" content="300" />
   <meta property="og:image:height" content="300" />
   <meta property="og:image:type" content="image/png" />
