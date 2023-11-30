@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{title|slice:'60'}}</title>
-  {{ settings.head|safe }}
+  {% if settings.head %}{{ settings.head|safe }}{% endif %}
   <meta name="keywords" content="{% if tags %} {{tags}} {% else %} {{settings.tags}} {% endif %}">
   <meta name="description" content="{% if description %} {{ description|slice:'158' }} {% else %}{{ settings.description|slice:"169" }}{% endif %}" />
   <link rel='canonical' href='{{ request.scheme }}://{{ request.get_host }}{{ request.path }}' />
