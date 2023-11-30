@@ -293,9 +293,9 @@ def site_info(request):
 
     if request.method == "POST":
         if settings:
-            form = SiteInfoForm(request.POST, instance=settings)
+            form = SiteInfoForm(request.POST, request.FILES, instance=settings)
         else:
-            form = SiteInfoForm(request.POST)
+            form = SiteInfoForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
