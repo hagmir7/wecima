@@ -1,1 +1,1 @@
-{{ settings.ads }}
+{% if settings.ads %}{{ settings.ads }}{% endif %}

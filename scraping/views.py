@@ -126,10 +126,19 @@ def updatePost(request, id):
 def deletePost(request, id):
     if request.user.is_superuser:
         post = Post.objects.get(id=id)
-        slug = str(post.next().slug)
+        try:
+            slug = str(post.next().slug)
+        except:
+            pass
         post.delete()
         messages.success(request, "Post Deleted Succesfully..")
-        return redirect(f"/p/{slug}")
+        if request.GET.get('post'):
+            try:
+                return redirect(f"/p/{slug}")
+            except:
+                return redirect("/post/list/")
+        else:
+            return redirect("/post/list/")
     else:
         return redirect("/")
 

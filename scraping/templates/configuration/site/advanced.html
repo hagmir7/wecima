@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="card shadow-sm">
-                <h1 class="h4 mt-3">Update Cover</h1>
+                <h1 class="h4 mt-3">Advanced settings</h1>
                 {% if messages %}
                     {% for message in messages %}
                         <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}" {% endif %}>
@@ -37,7 +37,7 @@
             mode: "htmlmixed",
             lineNumbers: true,
             theme: "material",
-            lineWrapping: true,
+            lineWrapping: false,
             smartIndent: true,
             matchBrackets: true,
             autoCloseTags: true,

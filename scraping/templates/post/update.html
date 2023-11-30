@@ -2,7 +2,12 @@
 {% block content %}
 <div class="row justify-content-center">
         <div class="col-md-10 p-3 card rounded border shadow-sm">
-            <h1 class="h3 my-2">Update Post</h1>
+            <h1 class="h3 my-2">Create & Update  Post</h1>
+            {% if messages %}
+                {% for message in messages %}
+                <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                     <label class="mt-2" for="id_title">Title:</label>

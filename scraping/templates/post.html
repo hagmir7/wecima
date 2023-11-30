@@ -12,7 +12,7 @@
                 {{ post.body|safe }}
                 {% if user.is_superuser   %}
                 <div class="mb-3">
-                    <a class="btn btn-danger text-white me-2 rounded-pill bg-gradient-warnign" onclick="return confirm('Are you sur you want to delete Post.')" href="/post/delete/{{ post.id }}">Delete</a>
+                    <a class="btn btn-danger text-white me-2 rounded-pill bg-gradient-warnign" onclick="return confirm('Are you sur you want to delete Post.')" href="/post/delete/{{ post.id }}?post=true">Delete</a>
                     <a class="btn  rounded-pill bg-gradient-success text-white" href="{% url 'update_post' post.id %}">Update</a>
                 </div>
                 {% endif %}
