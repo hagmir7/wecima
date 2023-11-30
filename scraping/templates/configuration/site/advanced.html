@@ -32,7 +32,8 @@
 
 {% block script %}
     <script>
-        var yourCodeEditor = CodeMirror.fromTextArea(document.getElementById("id_head"), {
+
+        const MirrorDate = {
             mode: "htmlmixed",
             lineNumbers: true,
             theme: "material",
@@ -44,20 +45,8 @@
             extraKeys: {
                 "Ctrl-Space": "autocomplete",
             },
-        });
-
-        CodeMirror.fromTextArea(document.getElementById("id_script"), {
-            mode: "htmlmixed",
-            lineNumbers: true,
-            theme: "material",
-            lineWrapping: false,
-            smartIndent: true,
-            matchBrackets: true,
-            autoCloseTags: true,
-            
-            extraKeys: {
-                "Ctrl-Space": "autocomplete",
-            },
-        });
+        }
+        CodeMirror.fromTextArea(document.getElementById("id_head"), MirrorDate);
+        CodeMirror.fromTextArea(document.getElementById("id_script"), MirrorDate);
     </script>
 {% endblock script %}
