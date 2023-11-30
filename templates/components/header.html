@@ -2,9 +2,9 @@
     <div class="container-fluid">
       <a class="text-muted logo-text" href="/">
         {% if settings.logo %}
-          <img src="{{ settings.logo.url }}" width='auto' height="41px" title="{{ settings.description }}" alt="{{ settings.description }}" /></a>
+          <img src="{{ settings.logo.url }}" width='auto' height="41px" title="{{ settings.title }}" alt="{{ settings.name }}" /></a>
         {% else %}
-          <img src="{% static 'img/poolsbox.webp' %}" width='auto' height="41px" title="{{ settings.description }}" alt="{{ settings.description }}" /></a>
+          <img src="{% static 'img/logo.png' %}" width='auto' height="41px" title="{{ settings.title }}" alt="{{ settings.name }}" /></a>
         {% endif %}
       <a href="/menu" class="navbar-toggler fs-1"> ≡ </a>
       <nav class="collapse navbar-collapse mx-4" id="navbarSupportedContent">
@@ -26,7 +26,7 @@
             </button>
             </div>
         </form>
-      {% if user.is_authenticated  %}
+      {% if user.is_superuser  %}
         <a class="btn btn-info btn-sm rounded-pill text-white px-3" href="/dashboard">Dashboard</a>
       {% else %}
         <a class="btn btn-info btn-sm rounded-pill text-white px-3" href="{% url 'login' %}">Join</a>

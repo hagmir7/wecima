@@ -2,17 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
+
 # from django.contrib.sites.models import Site
-
-
-
 
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(null=True, blank=True, max_length=200)
     category = models.CharField(blank=True, null=True, max_length=50)
-    image = models.ImageField(upload_to='Image',null=True, blank=True)
+    image = models.ImageField(upload_to="Image", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     views = models.IntegerField(default=0)
     tags = models.CharField(max_length=100, null=True, blank=True)
@@ -22,11 +20,11 @@ class Post(models.Model):
     is_public = models.BooleanField(default=True)
 
     def get_absolute_url(self):
-        return f'/p/{self.slug}'
+        return f"/p/{self.slug}"
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
         if self.id:
             self.slug = self.slug
@@ -34,14 +32,12 @@ class Post(models.Model):
             self.slug = slugify(self.title)
 
         super(Post, self).save(*args, **kwargs)
-    
+
     def next(self):
         return self.get_next_by_date()
 
     def pre(self):
         return self.get_previous_by_date()
-
-
 
 
 class Page(models.Model):
@@ -58,7 +54,7 @@ class Page(models.Model):
         if self.id:
             self.slug = self.slug
         else:
-            self.slug = slugify(self.title +"-"+ str(random))
+            self.slug = slugify(self.title + "-" + str(random))
 
         super(Page, self).save(*args, **kwargs)
 
@@ -71,12 +67,8 @@ class Contact(models.Model):
     readed = models.DateTimeField(null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
-
-
     def __str__(self):
         return self.name
-    
-
 
 
 class Link(models.Model):
@@ -91,20 +83,22 @@ class Link(models.Model):
         return self.name
 
 
-
 class Settings(models.Model):
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=150)
     description = models.TextField()
     tags = models.CharField(max_length=200)
-    logo = models.ImageField(upload_to='Logos', null=True, blank=True)
+    logo = models.ImageField(upload_to="Logos", null=True, blank=True)
+    favicon = models.ImageField(upload_to="Favicons", null=True, blank=True)
+    theme_color = models.CharField(max_length=100, null=True, blank=True)
 
+    cover = models.ImageField(upload_to="Covers", null=True, blank=True)
+    cover_title = models.CharField(max_length=100, null=True)
+    cover_description = models.TextField(max_length=150, blank=True)
 
-    cover = models.ImageField(upload_to='Covers', null=True, blank=True)
-    cover_title = models.CharField(max_length=100)
-    cover_description = models.TextField(max_length=150)
-
+    head = models.TextField(blank=True, null=True)
+    script = models.TextField(blank=True, null=True)
+    ads = models.CharField(max_length=300, verbose_name=('Ads file (ads.txt)'), null=True, blank=True)
 
     def __str__(self):
         return self.name
-    

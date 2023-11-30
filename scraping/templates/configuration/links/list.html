@@ -6,9 +6,11 @@
 <div class="container">
     <div class="row ">
         <div class="card shadow-sm">
-            {% for message in messages  %}
-                {{ message.text }}
-            {% endfor %}
+            {% if messages %}
+                {% for message in messages %}
+                <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <form action="{% url "create_link" %}" method="POST" enctype="multipart/form-data" class="my-3">
                 {% csrf_token %}
                 <div class="row">
@@ -23,11 +25,11 @@
                     <div class="col-md-4">
                         <label for=""><strong>Display in </strong>:</label>
                     <div>
-                        <input type="checkbox" id="header" name="header" class="form-checkbox">
+                        <input type="checkbox" value="true" id="header" name="header" class="form-checkbox">
                         <label for="header">Header</label>
                     </div>
                     <div class="">
-                        <input type="checkbox" id="footer" name="footer" class="form-checkbox">
+                        <input type="checkbox" value="true" id="footer" name="footer" class="form-checkbox">
                         <label for="footer">Footer</label>
                     </div>
                     </div>
@@ -39,6 +41,8 @@
                     {% if links %}
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Header</th>
+                        <th scope="col">Footer</th>
                         <th scope="col">Name</th>
                         <th scope="col">Url</th>
                         <th scope="col">Actions</th>
@@ -49,11 +53,13 @@
                     {% for link in links %}
                      <tr>
                         <th scope="row">{{ link.id }}</th>
+                        <td>{% if link.header %}Yes{% else %}No{% endif %}</td>
+                        <td>{% if link.footer %}Yes{% else %}No{% endif %}</td>
                         <td>{{ link.name }}</td>
                         <td>{{ link.url|truncatechars:100 }}</td>
                         <td class="d-flex">
                             <a class="btn mx-1 btn-sm btn-danger" href="{% url "link_delete" link.id %}"onclick="return alert('Are you sur you want to delete')">Delete</a>
-                            <a class="btn mx-1 btn-sm btn-success" href="/link/update/{{ link.id }}">Update</a>
+                            <a class="btn mx-1 btn-sm btn-success" href="{% url "link_update" link.id %}">Update</a>
                         </td>
                     </tr>
                     {% empty %}

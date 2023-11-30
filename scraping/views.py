@@ -6,12 +6,13 @@ import requests
 from django.contrib.auth.decorators import user_passes_test
 from .models import *
 from django.core.paginator import Paginator
-from .forms import CreateContact, FormCreatePage, PostForm, LinkForm
+from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
 from django.views import View
+
 
 def superuser_required(user):
     if not user.is_superuser:
@@ -19,10 +20,10 @@ def superuser_required(user):
     return True
 
 
-
 class AdsView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'ads.txt')
+        return render(request, "ads.txt")
+
 
 # Home page
 def index(request):
@@ -267,18 +268,82 @@ def link_delete(request, id):
         link.delete()
         messages.success(request, "Link deleted successfully..")
         return redirect(request.META.get("HTTP_REFERER"))
-    messages.warning(request, "Fail to delete link.")
+    messages.warning(request, "Fail to delete link.", extra_tags="danger")
     return redirect(request.META.get("HTTP_REFERER"))
 
 
 @user_passes_test(superuser_required)
-def cover(request):
-    return render(request, "configuration/cover/update.html")
+def link_update(request, id):
+    link = get_object_or_404(Link, id=id)
+    form = LinkForm(instance=link)
+
+    if request.method == "POST":
+        form = LinkForm(request.POST, instance=link)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Link updated successfully.")
+            return redirect(request.META.get("HTTP_REFERER"))
+
+    return render(request, "configuration/links/update.html", {"form": form})
 
 
 @user_passes_test(superuser_required)
-def site_setings(request):
-    return render(request, "configuration/cover/settings.html")
+def site_info(request):
+    settings = Settings.objects.last()
+
+    if request.method == "POST":
+        if settings:
+            form = SiteInfoForm(request.POST, instance=settings)
+        else:
+            form = SiteInfoForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Site info is updated successfully.")
+            return redirect(request.META.get("HTTP_REFERER"))
+
+    else:  # For GET requests
+        form = SiteInfoForm(instance=settings) if settings else SiteInfoForm()
+
+    return render(request, "configuration/site/info.html", {"form": form})
+
+
+@user_passes_test(superuser_required)
+def cover(request):
+    settings = Settings.objects.last()
+    if request.method == "POST":
+        if settings:
+            form = CoverForm(request.POST, request.FILES, instance=settings)
+        else:
+            form = CoverForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Cover is updated successfully.")
+            return redirect(request.META.get("HTTP_REFERER"))
+
+    else:  # For GET requests
+        form = CoverForm(instance=settings) if settings else CoverForm()
+    return render(request, "configuration/site/cover.html", {"form": form})
+
+
+@user_passes_test(superuser_required)
+def advanced(request):
+    settings = Settings.objects.last()
+    if request.method == "POST":
+        if settings:
+            form = AdvancedForm(request.POST, request.FILES, instance=settings)
+        else:
+            form = AdvancedForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Cover is updated successfully.")
+            return redirect(request.META.get("HTTP_REFERER"))
+
+    else:  # For GET requests
+        form = AdvancedForm(instance=settings) if settings else AdvancedForm()
+    return render(request, "configuration/site/advanced.html", {"form": form})
 
 
 @user_passes_test(superuser_required)

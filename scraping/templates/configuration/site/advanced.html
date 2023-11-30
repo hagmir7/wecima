@@ -1,0 +1,63 @@
+{% extends "base-dash.html" %}
+
+{% block head %}
+    <!-- Include CodeMirror styles and scripts here -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/python/python.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlmixed/htmlmixed.js"></script>
+{% endblock head %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card shadow-sm">
+                <h1 class="h4 mt-3">Update Cover</h1>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}" {% endif %}>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form method="POST" enctype="multipart/form-data" class="my-3">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-success mt-2">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        var yourCodeEditor = CodeMirror.fromTextArea(document.getElementById("id_head"), {
+            mode: "htmlmixed",
+            lineNumbers: true,
+            theme: "material",
+            lineWrapping: true,
+            smartIndent: true,
+            matchBrackets: true,
+            autoCloseTags: true,
+            
+            extraKeys: {
+                "Ctrl-Space": "autocomplete",
+            },
+        });
+
+        CodeMirror.fromTextArea(document.getElementById("id_script"), {
+            mode: "htmlmixed",
+            lineNumbers: true,
+            theme: "material",
+            lineWrapping: false,
+            smartIndent: true,
+            matchBrackets: true,
+            autoCloseTags: true,
+            
+            extraKeys: {
+                "Ctrl-Space": "autocomplete",
+            },
+        });
+    </script>
+{% endblock script %}

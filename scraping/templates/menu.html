@@ -3,7 +3,7 @@
         <div class="col-md-8">
             <div class="list-group">
                 <a href="/" class="list-group-item list-group-item-action">Home</a>
-                {% for links in link  %}
+                {% for link in header  %}
                 <a href="{{ link.url }}" class="list-group-item list-group-item-action">{{ link.name }}</a>
                 {% endfor %}
             </div>

@@ -70,7 +70,7 @@ class ProfileView(DetailView):
         context = super(ProfileView, self).get_context_data(*arge, **kwargs)
         page = get_object_or_404(Profile, slug=self.kwargs['slug'])
         description = _('You can join now to connect with your  friends and enjoy your books and courses register now')
-        title = f'{page.user.first_name} {page.user.last_name} - {_("Freesad")}'
+        title = f'{page.user.first_name} {page.user.last_name}'
         
 
 

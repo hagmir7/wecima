@@ -11,7 +11,7 @@ def context_data(request):
     settings = Settings.objects.last() 
 
     return {
-        'messages': messages,
+        'contacts': messages,
         'footer' : footer,
         'header' : header,
         'settings' : settings,

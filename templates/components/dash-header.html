@@ -10,16 +10,16 @@
                 <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">
                     <div class="position-relative">
                          <i class="align-middle" data-feather="message-square"></i>
-                        <span class="indicator">{{messages.count}}</span>
+                        <span class="indicator">{{contacts.count}}</span>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
                     <div class="dropdown-menu-header">
-                        {{messages.count}} New messages
+                        {{contacts.count}} New contacts
                     </div>
                     <div class="list-group">
 
-                        {% for contact in messages %}
+                        {% for contact in contacts %}
                         <a href="#" class="list-group-item">
                             <div class="row g-0 align-items-center">
                                 <div class="col-2">
@@ -36,7 +36,7 @@
                         
                         {% empty %}
                         <div class="py-3 text-center">
-                            No messages
+                            No contacts
                         </div>
                         
                         {% endfor %}
@@ -57,13 +57,9 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="{% url 'profile' user.profile.slug %}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i>
-                        Analytics</a>
-                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/settings"><i class="align-middle me-1" data-feather="settings"></i>
                         Settings & Privacy</a>
-                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help
-                        Center</a>
+             
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                 </div>

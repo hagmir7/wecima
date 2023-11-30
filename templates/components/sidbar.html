@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="/dashboard">
-            <span class="align-middle">MeryLivre</span>
+            <span class="align-middle">{% if settings.name %}{{ settings.name }}{% else %}Site Name{% endif %}</span>
         </a>
 
         <ul class="sidebar-nav">
@@ -39,11 +39,11 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
+            {% comment %} <li class="sidebar-item">
                 <a class="sidebar-link" href="/books/list">
                     <i class="align-middle" data-feather="book"></i> <span class="align-middle">Books</span>
                 </a>
-            </li>
+            </li> {% endcomment %}
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/contact/list">

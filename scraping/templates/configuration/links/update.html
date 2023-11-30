@@ -1,0 +1,50 @@
+{% extends "base-dash.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row ">
+        <div class="card shadow-sm">
+            
+            <h1 class="h4 mt-3">Update link ({{ form.name.value }}) - <a href="{% url 'links' %}"><small>Links</small></a></h1>
+            {% if messages %}
+            {% for message in messages %}
+            <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data" class="my-3">
+                {% csrf_token %}
+
+                <label for="id_name">Name:</label>
+                <input type="text" name="name" value="Hassane Agmir" class="form-control" maxlength="100" required="" id="id_name">
+                <label for="id_url">Url:</label>
+                <input type="text" name="url" value="https://www.freewsad.com/book/9h2bn" class="form-control" maxlength="500" required="" id="id_url">
+
+
+                <div class="form-check mt-2">
+                    <input class="form-check-input" value="true" {% if form.footer.value %} checked {% endif %} name="footer" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Display in Footer
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" value="true" {% if form.header.value %} checked {% endif %} name="header" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Display in header
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" value="true" {% if form.header.value %} checked {% endif %} name="new_tab" type="checkbox"
+                        value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                       Open in new Tab
+                    </label>
+                </div>           
+             <button class="btn btn-success mt-2">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

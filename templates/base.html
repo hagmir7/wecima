@@ -4,29 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{title|slice:'60'}}</title>
+  {{ setting.head|safe }}
   <meta name="keywords" content="{% if tags %} {{tags}} {% else %} {{settings.tags}} {% endif %}">
   <meta name="description" content="{% if description %} {{ description|slice:'158' }} {% else %}{{ settings.description|slice:"169" }}{% endif %}" />
-  <link rel='canonical' href='https://{{ request.get_host }}{{ request.path }}' />
-  <link rel="icon" href='{% if settings.logo %} {{settings.logo.url }} {% else %} {% static "img/pb.webp" %} {% endif %}' type="image/webp">
-  <meta property="image" content="{% if image %}{{ image }}{% else %}{% static 'img/pb.webp' %} {% endif %}" />
-  <meta name="author" content="">
-  <meta name="theme-color" content="#2dce89" />
+  <link rel='canonical' href='{{ request.scheme }}://{{ request.get_host }}{{ request.path }}' />
+  <link rel="icon" href='{% if settings.favicon %} {{settings.favicon.url }} {% else %} {% static "img/favicon-32x32.png" %} {% endif %}' type="image/png">
+  <meta property="image" content="{% if image %}{{ image }}{% else %} {% if setting.logo %} {{setting.logo.url}} {% endif %}{% endif %}" />
+  <meta name="author" content="{{ setting.name }}">
+  <meta name="theme-color" content="{{ setting.theme_color }}" />
   <!-- Open graph -->
   <meta property="og:title" content="{{ title|slice:'60' }}" />
   <meta property="og:description" content="{% if description %} {{ description|slice:'158' }} {% else %}{{ settings.description|slice:"169" }}{% endif %}" />
-  <meta property="og:url" content="https://{{ request.get_host }}{{ request.path  }}" />
+  <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
   <meta property="og:site_name" content="{{ settings.name }}" />
-  <meta property="og:image" content="{% if image %} {{ image }} {% else %} {% if settings.logo %}{{ settings.logo.url }}{% endif %} {% endif %}" />
+  <meta property="og:image" content="{% if image %}{{ image }}{% else %} {% if setting.logo %} {{setting.logo.url}} {% endif %}{% endif %}" />
   <meta property="og:image:width" content="300" />
   <meta property="og:image:height" content="300" />
-  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:locale" content="en_US" />
   <!-- Twitter -->
   <meta name="twitter:creator" content="@{{ settings.name }}" />
   <meta name="twitter:site" content="@{{ settings.name }}" />
   <meta name="twitter:label1" content="{{ settings.name }}" />
   <meta name="twitter:data1" content="{{ settings.name }}" />
-  <meta name="twitter:data2" content="8 minutes" />
+
   {% if article %}
   <meta property="og:type" content="article" />
   <meta property="article:published_time" content="{{ date }}" />
@@ -34,10 +35,6 @@
   <meta property="og:type" content="website" />
   {% endif %}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  {% if cpanel %}
-    <meta name="google-site-verification" content="-5mC-iUQ4JE2XrNf6R-0Aj71O2xKa4KiKoIVPBZir1o" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6544557385019055" crossorigin="anonymous"></script>
-  {% endif %}
   <style>body{background-image:linear-gradient(310deg,#2dce8912,#2dcecc17)}p{font-size:1.1em!important}.card-2{border-radius:25px;background:#fff;padding:5px}header{box-shadow:-1px 1px 2px #ded5d5a8}*{font-family:source sans pro,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol}.aligncenter img,.entry-thumb,figure,figure img,p img{width:100%!important;height:auto!important}.card-title,.copyright,a{text-decoration:none!important;color:#01c16e!important}.cover{background-size:cover;background-position:bottom;background-image:url('{% static "img/travel-1.webp" %}');width:100%;height:500px;opacity:.7}.cover img{object-fit:cover}.size-full{margin-bottom:12px}.bg-gradient-success{background-image:linear-gradient(310deg,#2dce89,#2dcecc)}.img-content{height:220px;width:100%}.img-content img{height:100%;width:100%;object-fit:cover!important}iframe.note-fullscreen{position:fixed;top:0;left:0;width:100vw!important;height:100vh!important;z-index:4000}@media (max-width:576px){.img-content{height:auto;width:100%}.img-content img{height:100%;width:100%;object-fit:contain!important}}</style>
 </head>
 
@@ -92,6 +89,7 @@
 </script>
 
 {% block script %}{% endblock script %}
+{{ settings.script|safe }}
 </body>
 
 </html>

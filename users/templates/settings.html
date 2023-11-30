@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="list-group-item d-flex">
-                    <a href="{% url "site_setings" %}">
+                    <a href="{% url "site_info" %}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-suitcase mr-2"></span>
@@ -78,6 +78,18 @@
                         </div>
                     </a>
                 </li>
+
+                <li class="list-group-item d-flex">
+                    <a href="{% url "advanced" %}">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                <span class="fa fa-lock mr-2"></span>
+                                <strong>{% trans "Advanced" %}</strong></div>
+                            {% trans "Tags for head, script..." %}
+                        </div>
+                    </a>
+                </li>
+                
             </ul>
         </div>
     </div>

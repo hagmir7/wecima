@@ -1,1 +1,1 @@
-google.com, pub-6544557385019055, DIRECT, f08c47fec0942fa0
+{{ settings.ads }}
