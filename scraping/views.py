@@ -29,9 +29,13 @@ class AdsView(View):
 def index(request):
     posts = Post.objects.all().order_by("-date")[0:24]
     settings = Settings.objects.last()
+    if settings:
+        title = settings.title
+    else:
+        title = "Blog Website Create by Freesad.com"
     context = {
         "posts": posts,
-        "title": settings if settings.title else "Blog Website Create by Freesad.com",
+        "title": title
     }
     return render(request, "index.html", context)
 
