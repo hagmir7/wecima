@@ -13,6 +13,8 @@ from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
 from django.views import View
 
+settings = Settings.objects.last()
+
 
 def superuser_required(user):
     if not user.is_superuser:
@@ -28,7 +30,6 @@ class AdsView(View):
 # Home page
 def index(request):
     posts = Post.objects.all().order_by("-date")[0:24]
-    settings = Settings.objects.last()
     if settings:
         title = settings.title
     else:
@@ -62,7 +63,11 @@ def blog(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    context = {"posts": posts, "title": "Travel - Mery Livre Travel Site"}
+    if settings:
+        title = settings.name
+    else:
+        title = "No title yet"
+    context = {"posts": posts, "title": f"Blog - {title}"}
     return render(request, "blog.html", context)
 
 
@@ -199,7 +204,7 @@ def PendingPosts(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    context = {"posts": posts, "title": "Mery Livre Travel Site"}
+    context = {"posts": posts, "title": "Pending Posts"}
     return render(request, "post/list.html", context)
 
 
@@ -368,12 +373,21 @@ def deletePage(request, id):
 
 def lable(request, lable):
     posts = Post.objects.filter(title__icontains=lable)
-    context = {"posts": posts, "title": f"{lable} - Mery Livre"}
+    if settings:
+        title = settings.name
+    else:
+        title = "No title yet"
+    context = {"posts": posts, "title": f"{lable} - {title}"}
     return render(request, "lable.html", context)
 
 
 def menu(request):
-    context = {"title": "Menu - Mery Livre"}
+    if settings:
+        title = settings.name
+    else:
+        title = "No title yet"
+
+    context = {"title": f"Menu - {title}"}
     return render(request, "menu.html", context)
 
 
@@ -385,7 +399,12 @@ def contact(request):
             form.save()
             messages.success(request, "The message has been sent successfully")
             return redirect("contact")
-    context = {"form": form, "title": "Mery Livre - Contace"}
+    
+    if settings:
+        title = settings.name
+    else:
+        title = "No title yet"
+    context = {"form": form, "title": f"Contace - {title}"}
     return render(request, "contact/contact.html", context)
 
 
@@ -486,7 +505,7 @@ def getItem(url):
 
     article = str(article).replace("<div", "<article")
     article = str(article).replace("</div", "</article")
-    article = str(article).replace("www.thecrazytourist.com", "www.Mery Livre.com")
+    article = str(article).replace("www.thecrazytourist.com", "www.merylivre.com")
     return article
 
 
