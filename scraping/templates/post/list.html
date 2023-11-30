@@ -10,6 +10,11 @@
         </div>
 
         <div class="col-md-12 card shadow-sm">
+            {% if messages %}
+                {% for message in messages %}
+                <div {% if message.tags %} class="alert p-2 my-2 alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <table class="table">
                 <thead>
                   <tr>
