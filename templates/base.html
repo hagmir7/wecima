@@ -89,7 +89,8 @@
 </script>
 
 {% block script %}{% endblock script %}
-{{ settings.script|safe }}
+
+{% if settings.script %}{{ settings.script|safe }}{% endif %}
 </body>
 
 </html>
