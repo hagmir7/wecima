@@ -13,7 +13,10 @@ from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
 from django.views import View
 
-settings = Settings.objects.last()
+try:
+    settings = Settings.objects.last()
+except:
+    pass
 
 
 def superuser_required(user):
