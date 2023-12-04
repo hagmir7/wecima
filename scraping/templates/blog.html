@@ -4,15 +4,24 @@
     {% include 'tags.html' %}
     <div class="row">
         {% for post in posts %}
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
+              <div class="col-12 col-md-6 col-lg-4 mb-3">
             <a href="/p/{{ post.slug }}">
-                <div class="img-content">
-                    {% if post.image %}
-                        <img class="card-img-top m-0 p-0 border rounded lazy" alt="{{ post.title }}" width="100%" title="{{ post.title }}" height="auto" data-src="{{ post.image.url }}" style="object-fit: contain;" src="{% static "img/loading.svg" %}" data-srcset="{{ post.image.url }}" >
-                    {% else %}
-                        <img class="card-img-top m-0 p-0 border rounded" alt="{{ post.title }}" title="{{ post.title }}"  width="100%" height="auto" style="object-fit: contain;"  src="{% static "img/loading.svg" %}" >
-                    {% endif %}
+               <div class="img-content">
+                {% if post.image %}
+                    <img class="card-img-top m-0 p-0 border rounded lazy" 
+                            alt="{{ post.title }}" width="100%" title="{{ post.title }}" height="auto" 
+                            data-src="{{ post.image.url|default:"/static/img/loading.svg" }}" style="object-fit: contain;"  
+                            src="{% static "img/loading.svg" %}" 
+                            data-srcset="{{ post.image.url|default:"/static/img/loading.svg" }}" 
+                        />
+                {% else %}
+                       <img class="card-img-top m-0 p-0 border rounded lazy" src="{% static "img/loading.svg" %}" 
+                            alt="{{ post.title }}" width="100%" title="{{ post.title }}" height="auto" 
+                        />
+                {% endif %}
+                    
                 </div>
+
             </a>
             <div class="card-body m-0 p-0 mt-2">
                 <a class=" " href="/p/{{ post.slug }}">
@@ -24,7 +33,7 @@
                     </small>
                 </p>
             </div>
-        </div>
+        </div>  
         {% empty %}
         <div class="h3 py-5 my-5 text-center">
             OOPS! No Post ({{title}})
