@@ -1,24 +1,40 @@
-<footer class="footer-07 bg-white border-top border-bottom mt-5 nav">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12 text-center">
-                <div class="footer-heading mt-3"><a href="/" class="logo h5 fs-5 text-muted">{{ request.get_host|upper }}</a></div>
-                <p class="menu d-flex justify-content-center mt-3 flex-wrap fs-5">
+<footer>
+    <section class="py-3 bg-secondary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 order-sm-1">
+                    <h5 class="lh-lg fw-bold mb-4 text-light rubik">من نحن </h5>
+                    <p class="rubik text-white">عندما يقال سقطت ورقة التوت يكون كناية عن انكشاف شيء لم يكن مكشوفًا أو
+                        المقصود به كشف الستر عن شيء ليس معروفًا أو كان مختبأ، هذا التعريف كان من الأقوال المأثورة ولقد
+                        عُرف ورق التوت منذ قديم الأزل، فقبل أن يتم اختراع الملابس كان يقوم الإنسان بستر نفسه بورق التوت
+                    </p>
+                </div>
+                <div class="col-md-4 order-sm-2">
+                    <h5 class="lh-lg fw-bold text-light mb-4 rubik">راوبط مهمة</h5>
+                    <ul class="list-unstyled mb-md-4 mb-lg-0">
+                        <li class="lh-lg"><a class="text-200 rubik" href="#!">الرئيسية</a></li>
+                        <li class="lh-lg"><a class="text-200 rubik" href="#!">تواصل معنا</a></li>
+                        <li class="lh-lg"><a class="text-200 rubik" href="#!">مواضيع</a></li>
+                        <li class="lh-lg"><a class="text-200 rubik" href="#!">حول</a></li>
+                        <li class="lh-lg"><a class="text-200 rubik" href="#!">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 order-sm-2">
+                    <h5 class="lh-lg fw-bold text-light mb-4 rubik"> المزيد</h5>
+                    <ul class="list-unstyled mb-md-4 mb-lg-0">
+                        {% for link in footer %}
+                        <li class="lh-lg"><a class="text-200 rubik" href="{{ link.url }}">{{ link.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end of .container-->
 
-                    {% for link in footer %}
-                     <a href="{{ link.url }}" {% if link.new_tab %}target="_blank"{% endif %} class="nav-link text-muted mx-2">{{ link.name }}</a>
-                    {% endfor %}
-                   
-                </p>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-12 text-center">
-                <p class="fs-5">
-                    Copyright ©
-                    <script>document.write(new Date().getFullYear());</script> 2021  All rights reserved.
-                </p>
-            </div>
-        </div>
-    </div>
+    </section>
+        <p class="fs-1 text-center py-3 rubik">
+            حقوق النشر ©
+            <script>document.write(new Date().getFullYear());</script> 2023 جميع الحقوق محفوظة.
+        </p>
+
 </footer>

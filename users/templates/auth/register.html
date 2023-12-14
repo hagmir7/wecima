@@ -4,9 +4,9 @@
 {% block content %}
 <div id="content-wrapper">
     <div class="row m-0 p-0 justify-content-center">
-        <div class="card py-3 border col-sm-12  col-md-6 col-lg-4 col-xl-4">
+        <div class="card shadow-sm py-3 border col-sm-12  col-md-6 col-lg-4 col-xl-4">
             <div class="p-2">
-                <h4 class="modal-title">{% trans 'Sing Up | Log In' %}</h4>
+                <h4 class="fw-bold rubik">إنشاء حساب جديد</h4>
             </div>
             <div class=" p-2">
                 {% if messages %}
@@ -20,18 +20,18 @@
                     <form class="p-1" action="{% url 'register' %}?next={{ request.GET.next }}" method="POST" enctype="multipart/form-data" role="form">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <small class="text-danger">{{ form.username.errors }}</small>
+                            <small class="text-danger rubik">{{ form.username.errors }}</small>
                             <div class="mr-0 lang-text ">
                                 {{form.username}}
                             </div>
-                            <small class="text-info mb-2 mr-4">{{ form.username.help_text}}</small>
+                            <small class="text-info mb-2 mr-4 rubik">{{ form.username.help_text}}</small>
                         </div>
                         <div class="mb-3">
-                            <small class="text-danger">{{ form.email.errors }}</small>
+                            <small class="text-danger rubik">{{ form.email.errors }}</small>
                             {{form.email}}
                         </div>
                         <div class="mb-3">
-                            <small class="text-danger">{{ form.first_name.errors }}</small>
+                            <small class="text-danger rubik">{{ form.first_name.errors }}</small>
                             {{form.first_name}}
                         </div>
                         <div class="mb-3">
@@ -41,12 +41,12 @@
                             {{form.password1}}
                         </div>
                         <div class="mb-3">
-                            <small class="text-danger">{{ form.password2.errors }}</small>
+                            <small class="text-danger rubik">{{ form.password2.errors }}</small>
                             {{form.password2}}
                         </div>
                         <div class="text-center mb-3">
-                            <button class="btn btn-primary w-100">{% trans 'Sing in' %}</button>
-                            <a href="{% url 'login' %}" class="btn-ag ag-blue mt-3 w-100">{% trans 'I have account' %}</a>
+                            <button class="btn btn-primary w-100 mb-2">دخول</button>
+                            <a href="{% url 'login' %}" class="btn-ag ag-blue rubik w-100">لدي حساب بالفعل؟</a>
                         </div>
                     </form>
                 </div>

@@ -32,22 +32,22 @@ class SignUpForm(forms.ModelForm):
 
 class UserCreationForm(forms.ModelForm):
     username = forms.CharField(label=_('Username'), max_length=30,help_text=_(
-        "Username should not contain spaces"),
+        "إسم المستخدم لا يجب أن يحتوي على مسافات"),
          widget=forms.TextInput(attrs={
              'class': 'form-control input-size bg-secondary',
               'placeholder': _('Username')}))
-    username = forms.CharField(label=_('Username'), max_length=30,help_text=_("Username should not contain spaces"), widget=forms.TextInput(
+    username = forms.CharField(label=_('Username'), max_length=30,help_text=_("إسم المستخدم لا يجب أن يحتوي على مسافات"), widget=forms.TextInput(
         attrs={'class': 'form-control input-size', 'placeholder': _('Username')}))
     email = forms.EmailField(label=_('Email'), widget=forms.EmailInput(
         attrs={'class': 'form-control', 'placeholder': _('Email')}))
-    first_name = forms.CharField(label=_('First name'), widget=forms.TextInput(
-        attrs={'class': 'form-control input-size', 'placeholder': _('First name')}))
-    last_name = forms.CharField(label=_('Last name'),widget=forms.TextInput(
-        attrs={'class': 'form-control input-size ', 'placeholder': _('Last name')}))
+    first_name = forms.CharField(label=_('الإسم الأول'), widget=forms.TextInput(
+        attrs={'class': 'form-control input-size', 'placeholder': _('الإسم الأول')}))
+    last_name = forms.CharField(label=_('الإسم الثاني'),widget=forms.TextInput(
+        attrs={'class': 'form-control input-size ', 'placeholder': _('الإسم الثاني')}))
     password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput(
         attrs={'class': 'form-control input-size', 'placeholder': _('Password')}), min_length=8)
-    password2 = forms.CharField(label=_('Confirm Password'), widget=forms.PasswordInput(
-        attrs={'class': 'form-control input-size', 'placeholder': _('Confirm Password')}), min_length=8)
+    password2 = forms.CharField(label=_('تأكيد كلمة المرور'), widget=forms.PasswordInput(
+        attrs={'class': 'form-control input-size', 'placeholder': _('تأكيد كلمة المرور')}), min_length=8)
 
     class Meta:
         model = User

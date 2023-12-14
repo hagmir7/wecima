@@ -37,10 +37,7 @@ def index(request):
         title = settings.title
     else:
         title = "Blog Website Create by Freesad.com"
-    context = {
-        "posts": posts,
-        "title": title
-    }
+    context = {"posts": posts, "title": title}
     return render(request, "index.html", context)
 
 
@@ -114,7 +111,7 @@ def updatePost(request, id):
     post = get_object_or_404(Post, id=id)
     form = PostForm(instance=post)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, instance=post, files=request.FILES)
         if form.is_valid():
             form.save()
             post.is_public = False
@@ -135,7 +132,7 @@ def deletePost(request, id):
             pass
         post.delete()
         messages.success(request, "Post Deleted Succesfully..")
-        if request.GET.get('post'):
+        if request.GET.get("post"):
             try:
                 return redirect(f"/p/{slug}")
             except:
@@ -411,7 +408,7 @@ def contact(request):
             form.save()
             messages.success(request, "The message has been sent successfully")
             return redirect("contact")
-    
+
     if settings:
         title = settings.name
     else:

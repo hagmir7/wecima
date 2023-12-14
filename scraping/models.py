@@ -2,14 +2,52 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
+import uuid
+import os
+from django.utils import timezone
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 
 # from django.contrib.sites.models import Site
+
+
+def filename(instance, filename):
+    if filename:
+        ext = filename.split(".")[-1]  # Get the file extension
+        new_filename = f"{uuid.uuid4().hex}.{ext}"
+        base_path = f"{str(instance._meta.model_name).lower()}s/{ext.upper()}"  # Change this to your desired directory
+        current_date = timezone.now().strftime("%Y-%m-%d")
+        file = os.path.join(base_path, current_date, new_filename)
+
+        return file
+    else:
+        return None
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200)
+
+    def get_absolute_url(self):
+        return f"/category/{self.slug}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = str(uuid.uuid4())
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(null=True, blank=True, max_length=200)
-    category = models.CharField(blank=True, null=True, max_length=50)
+    category = models.ManyToManyField(
+        Category, related_name="post_category", blank=True
+    )
     image = models.ImageField(upload_to="Image", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     views = models.IntegerField(default=0)
@@ -26,11 +64,8 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if self.id:
-            self.slug = self.slug
-        else:
-            self.slug = slugify(self.title)
-
+        if not self.slug:
+            self.slug = str(uuid.uuid4())
         super(Post, self).save(*args, **kwargs)
 
     def next(self):
@@ -50,11 +85,8 @@ class Page(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        random = get_random_string(length=5)
-        if self.id:
-            self.slug = self.slug
-        else:
-            self.slug = slugify(self.title + "-" + str(random))
+        if not self.slug:
+            self.slug = str(uuid.uuid4())
 
         super(Page, self).save(*args, **kwargs)
 
@@ -98,7 +130,9 @@ class Settings(models.Model):
 
     head = models.TextField(blank=True, null=True)
     script = models.TextField(blank=True, null=True)
-    ads = models.CharField(max_length=300, verbose_name=('Ads file (ads.txt)'), null=True, blank=True)
+    ads = models.CharField(
+        max_length=300, verbose_name=("Ads file (ads.txt)"), null=True, blank=True
+    )
 
     def __str__(self):
         return self.name
