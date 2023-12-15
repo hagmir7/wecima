@@ -1,20 +1,18 @@
-{% extends "base.html" %}{% block content %}<div class="contaiern">
+{% extends "base.html" %}{% block content %}
+<div class="container-flud">
     <div class="row d-flex justify-content-center">
         <div class="col-md-8">
             <div class="list-group">
-                <a href="/" class="list-group-item list-group-item-action">Home</a>
-                {% for link in header  %}
+                <a href="/" class="list-group-item list-group-item-action">الرئيسية</a>
+                {% for link in header %}
                 <a href="{{ link.url }}" class="list-group-item list-group-item-action">{{ link.name }}</a>
                 {% endfor %}
-            </div>
-        </div>
-        <div class="col-md-8 mt-2">
-            <div class="list-group">
-                <a href="/lable/Python" class="list-group-item list-group-item-action">Python</a>
-                <a href="/lable/PHP" class="list-group-item list-group-item-action">PHP</a>
-                <a href="/lable/JavaScript" class="list-group-item list-group-item-action">JavaScript</a>
-                <a href="/label/HTML" class="list-group-item list-group-item-action">HTML</a>
-                <a href="/lable/CSS" class="list-group-item list-group-item-action">CSS</a>
+
+                {% if not user %}
+                <a href="{% url "login" %}" class="list-group-item list-group-item-action">تسجيل الدخول</a>
+                {% else %}
+                <a href="{% url "logout" %}" class="list-group-item list-group-item-action">تسجيل الخروج</a>
+                {% endif %}
             </div>
         </div>
     </div>
