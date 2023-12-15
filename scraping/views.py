@@ -16,7 +16,7 @@ from django.views import View
 try:
     settings = Settings.objects.last()
 except:
-    pass
+    settings = False
 
 
 def superuser_required(user):
