@@ -233,7 +233,6 @@ var detectorInit = function detectorInit() {
   var _window = window,
       is = _window.is;
   var html = document.querySelector('html');
-  is.opera() && addClass(html, 'opera');
   is.mobile() && addClass(html, 'mobile');
   is.firefox() && addClass(html, 'firefox');
   is.safari() && addClass(html, 'safari');

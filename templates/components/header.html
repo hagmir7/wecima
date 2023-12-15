@@ -8,15 +8,15 @@
         <img src="/static/assets/img/logo.png" height="45" alt="{{ settings.title }}" title="{{ settings.title }}" />
       {% endif %}
     </a>
-    <a href="/menu" class="navbar-toggler">
+    <a href="/menu" class="navbar-toggler" aria-label="القائمة">
       <span class="navbar-toggler-icon"></span>
       <span class="d-none">القائمة</span>
      </a>
     <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
-        <li class="nav-item px-2"><a class="nav-link active rubik" aria-current="page" href="/">الرئيسية</a></li>
+        <li class="nav-item px-2"><a class="nav-link active rubik" aria-label="الرئيسية" href="/">الرئيسية</a></li>
         {% for link in header %}
-          <li class="nav-item px-2"><a class="nav-link active rubik" aria-current="page" href="{{ link.url }}">{{ link.name }}</a></li>
+          <li class="nav-item px-2"><a class="nav-link active rubik" aria-label="{{ link.name }}" href="{{ link.url }}">{{ link.name }}</a></li>
         {% endfor %}
       </ul>
       {% if user.is_superuser  %}
