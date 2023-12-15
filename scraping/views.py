@@ -67,7 +67,7 @@ def blog(request):
         title = settings.name
     else:
         title = "No title yet"
-    context = {"posts": posts, "title": f"Blog - {title}"}
+    context = {"posts": posts, "title": f"مواضيع - {title}"}
     return render(request, "blog.html", context)
 
 
@@ -149,7 +149,7 @@ def search(request):
         title = Post.objects.filter(title__icontains=query)
         description = Post.objects.filter(description__icontains=query)
         posts = title | description
-        context = {"posts": posts, "title": f"Search for {query}", "query": query}
+        context = {"posts": posts, "title": f"بحث عن {query}", "query": query}
         return render(request, "search.html", context)
     else:
         return redirect("/")
@@ -396,7 +396,7 @@ def menu(request):
     else:
         title = "No title yet"
 
-    context = {"title": f"Menu - {title}"}
+    context = {"title": f"القائمة - {title}"}
     return render(request, "menu.html", context)
 
 
@@ -406,14 +406,14 @@ def contact(request):
         form = CreateContact(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "The message has been sent successfully")
+            messages.success(request, "تم إرسال الرسالة")
             return redirect("contact")
 
     if settings:
         title = settings.name
     else:
-        title = "No title yet"
-    context = {"form": form, "title": f"Contace - {title}"}
+        title = "لا يوجد عنوان"
+    context = {"form": form, "title": f"تواصل معنا - {title}"}
     return render(request, "contact/contact.html", context)
 
 
