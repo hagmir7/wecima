@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title|slice:'60'}}</title>
     {% if settings.head %}{{ settings.head|safe }}{% endif %}
     <meta name="keywords" content="{% if tags %} {{tags}} {% else %} {{settings.tags}} {% endif %}">
@@ -41,20 +40,12 @@
     
 
   </head>
-
-
   <body>
-
-    <!-- ===============================================-->
-    <!--    Main Content-->
-    <!-- ===============================================-->
     <main class="main" id="top">
+      <!-- header -->
       {% include "components/header.html" %}
+      <!-- Contnet -->
       {% block content %}{% endblock content %}
-
-
-
-
       <section class="py-4">
         <div class="bg-holder" style="background-image:url(assets/img/gallery/funfacts-2-bg.png);background-position:center;background-size:cover;">
         </div>
@@ -81,10 +72,8 @@
       </section>
 
 
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
+      <!-- Subscrib -->
       <section class="py-3">
-
         <div class="container">
           <div class="row align-items-center">
             <div class="col-md-6 col-lg-4 mb-5"><img src="{% static "assets/img/gallery/cta.png" %}" width="280" alt="cta" /></div>
@@ -104,55 +93,48 @@
             </div>
           </div>
         </div>
-        <!-- end of .container-->
-
       </section>
-      {% include "components/footer.html" %}
 
-    {% comment %} <script src="vendors/@popperjs/popper.min.js"></script>
-    <script src="vendors/bootstrap/bootstrap.min.js"></script>
-    <script src="vendors/is/is.min.js"></script>
+    <!-- Footer -->
+    {% include "components/footer.html" %}
+
+    <!-- Scripts -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-    <script src="vendors/fontawesome/all.min.js"></script> {% endcomment %}
     <script src="{% static "assets/js/theme.js" %}"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
     
-<script>
-  function lazyLoader(value){
-    document.addEventListener("DOMContentLoaded", function () {
-    var lazyImages = [].slice.call(document.querySelectorAll(value));
+    <script>
+      function lazyLoader(value) {
+        document.addEventListener("DOMContentLoaded", function () {
+          var lazyImages = [].slice.call(document.querySelectorAll(value));
 
-    if ("IntersectionObserver" in window) {
-      let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            let lazyImage = entry.target;
-            if (lazyImage.hasAttribute('data-lazy-src')) {
-               lazyImage.src = lazyImage.getAttribute('data-lazy-src');
-                lazyImage.srcset = lazyImage.getAttribute('data-lazy-src');
-            }else{
-              lazyImage.src = lazyImage.dataset.src;
-               lazyImage.srcset = lazyImage.dataset.srcset;
-            }
-            lazyImage.classList.remove("lazy");
-            lazyImageObserver.unobserve(lazyImage);
+          if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function (entries, observer) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  let lazyImage = entry.target;
+                  if (lazyImage.hasAttribute('data-lazy-src')) {
+                    lazyImage.src = lazyImage.getAttribute('data-lazy-src');
+                    lazyImage.srcset = lazyImage.getAttribute('data-lazy-src');
+                  } else {
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.srcset = lazyImage.dataset.srcset;
+                  }
+                  lazyImage.classList.remove("lazy");
+                  lazyImageObserver.unobserve(lazyImage);
+                }
+              });
+            });
+
+            lazyImages.forEach(function (lazyImage) {
+              lazyImageObserver.observe(lazyImage);
+            });
           }
         });
-      });
+      }
 
-      lazyImages.forEach(function (lazyImage) {
-        lazyImageObserver.observe(lazyImage);
-      });
-    } else {
-      // Possibly fall back to event handlers here
-    }
-  });
-  }
-
-  lazyLoader("img.lazy")
-  
-</script>
-  </body>
+      lazyLoader("img.lazy")
+    </script>
+{% if settings.script %}{{ settings.script|safe }}{% endif %}
+</body>
 
 </html>

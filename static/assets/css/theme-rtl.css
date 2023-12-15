@@ -36,8 +36,8 @@
   --bs-danger: #EE4D47;
   --bs-light: #F0F4F9;
   --bs-dark: #23242A;
-  --bs-font-sans-serif: 'Reem Kufi Fun', sans-serif;
-  --bs-font-monospace: 'Reem Kufi Fun', sans-serif;
+  --bs-font-sans-serif: 'Rubik', sans-serif;
+  --bs-font-monospace: 'Rubik', sans-serif;
   --bs-gradient: linear-gradient(180deg, rgba(255, 254, 254, 0.15), rgba(255, 254, 254, 0));
 }
 
@@ -71,7 +71,7 @@
 
 body {
   margin: 0;
-  font-family: 'Reem Kufi Fun', sans-serif;
+  font-family: 'Rubik', sans-serif!;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -6573,7 +6573,7 @@ fieldset:disabled .btn {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: 'Reem Kufi Fun', sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6686,7 +6686,7 @@ fieldset:disabled .btn {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: 'Reem Kufi Fun', sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -17543,7 +17543,7 @@ ul {
 }
 
 .font-base {
-  font-family: 'Reem Kufi Fun', sans-serif;
+  font-family: 'Rubik', sans-serif;
 }
 
 
