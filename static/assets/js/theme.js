@@ -229,23 +229,24 @@ var utils = {
 
 /* -------------------------------------------------------------------------- */
 
-var detectorInit = function detectorInit() {
-  var _window = window,
-      is = _window.is;
-  var html = document.querySelector('html');
-  is.mobile() && addClass(html, 'mobile');
-  is.firefox() && addClass(html, 'firefox');
-  is.safari() && addClass(html, 'safari');
-  is.ios() && addClass(html, 'ios');
-  is.iphone() && addClass(html, 'iphone');
-  is.ipad() && addClass(html, 'ipad');
-  is.ie() && addClass(html, 'ie');
-  is.edge() && addClass(html, 'edge');
-  is.chrome() && addClass(html, 'chrome');
-  is.mac() && addClass(html, 'osx');
-  is.windows() && addClass(html, 'windows');
-  navigator.userAgent.match('CriOS') && addClass(html, 'chrome');
-};
+// var detectorInit = function detectorInit() {
+//   var _window = window,
+//   is = _window.is;
+//   var html = document.querySelector('html');
+//   is.opera() && addClass(html, 'opera');
+//   is.mobile() && addClass(html, 'mobile');
+//   is.firefox() && addClass(html, 'firefox');
+//   is.safari() && addClass(html, 'safari');
+//   is.ios() && addClass(html, 'ios');
+//   is.iphone() && addClass(html, 'iphone');
+//   is.ipad() && addClass(html, 'ipad');
+//   is.ie() && addClass(html, 'ie');
+//   is.edge() && addClass(html, 'edge');
+//   is.chrome() && addClass(html, 'chrome');
+//   is.mac() && addClass(html, 'osx');
+//   is.windows() && addClass(html, 'windows');
+//   navigator.userAgent.match('CriOS') && addClass(html, 'chrome');
+// };
 /*-----------------------------------------------
 |   Top navigation opacity on scroll
 -----------------------------------------------*/
@@ -374,6 +375,6 @@ var scrollToTop = function scrollToTop() {
 
 
 docReady(navbarInit);
-docReady(detectorInit);
+// docReady(detectorInit);
 docReady(scrollToTop);
 //# sourceMappingURL=theme.js.map
