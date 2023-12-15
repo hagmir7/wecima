@@ -185,6 +185,9 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, "fixtures"),
 ]
 
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
 
 # Cors Headers
 CORS_ORIGIN_ALLOW_ALL = True

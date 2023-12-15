@@ -18,8 +18,12 @@
       </ul>
       {% if user.is_superuser  %}
         <a class="btn btn-info btn-sm rounded-pill text-white px-3" href="/dashboard">لوحت تحكم</a>
+      {% endif %}
+
+      {% if user %}
+        {% comment %} <a class="btn btn-info btn-sm mx-2 rounded-pill text-white px-3" href="/profile">{{ user.first_name }}</a> {% endcomment %}
       {% else %}
-        <a class="btn btn-info btn-sm rounded-pill text-white px-3" href="{% url 'login' %}">إنضمام</a>
+        <a class="btn btn-success mx-2 btn-sm rounded-pill text-white px-3" href="{% url 'login' %}">إنضمام</a>
       {% endif %}
     </div>
   </div>
