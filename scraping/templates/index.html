@@ -14,7 +14,7 @@
           <div class="img-content">
             {% if post.image %}
             <img class="card-img-top m-0 p-0 border rounded lazy" alt="{{ post.title }}" width="100%"
-              title="{{ post.title }}" height="auto" data-src="{{ post.image.url|default:" /static/img/loading.svg" }}"
+              title="{{ post.title }}" height="100%" data-src="{{ post.image.url|default:" /static/img/loading.svg" }}"
               style="object-fit: contain;" src="{% static "img/loading.svg" %}"
               data-srcset="{{ post.image.url|default:" /static/img/loading.svg" }}" />
             {% else %}
