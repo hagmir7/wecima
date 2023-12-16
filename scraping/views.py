@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
 from django.views import View
+from django.http import Http404
 
 try:
     settings = Settings.objects.last()
@@ -21,7 +22,7 @@ except:
 
 def superuser_required(user):
     if not user.is_superuser:
-        raise PermissionDenied
+        return Http404("The requested resource does not exist.")
     return True
 
 
@@ -92,6 +93,58 @@ def post(request, slug):
         "article": True,
     }
     return render(request, "post.html", context)
+
+
+@user_passes_test(superuser_required)
+def create_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Category created successfully.")
+            return redirect(request.META.get("HTTP_REFERER"))
+    else:
+        form = CategoryForm()
+
+    return render(request, "category/create.html", {"form": form})
+
+
+@user_passes_test(superuser_required)
+def update_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Category updated successfully.")
+            return redirect(request.META.get("HTTP_REFERER"))
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(request, "category/create.html", {"form": form, "category": category})
+
+
+@user_passes_test(superuser_required)
+def delete_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    delete = category.delete()
+    if delete:
+        messages.success(request, "Category deleted successfully.")
+        return redirect("category_list")
+    else:
+        messages.warning(request, "Fail to delete category", extra_tags="danger")
+        return redirect(request.META.get("HTTP_REFERER"))
+
+
+@user_passes_test(superuser_required)
+def list_category(request):
+    content = Category.objects.all()
+    paginator = Paginator(content, 40)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    categories = paginator.get_page(page_number)
+    context = {"categories": categories}
+    return render(request, "category/list.html", context)
 
 
 @user_passes_test(superuser_required)

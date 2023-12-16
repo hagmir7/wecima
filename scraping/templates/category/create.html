@@ -1,0 +1,22 @@
+{% extends 'base-dash.html' %}
+{% block content %}
+<div class="row justify-content-center">
+        <div class="col-md-10 p-3 card rounded border shadow-sm">
+            <h1 class="h3 my-2">Update & Create category  </h1>
+            {% if messages %}
+                {% for message in messages %}
+                <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <label class="mt-2" for="id_name">Name:</label>
+                    <input class="form-control form-control-sm" type="text" name="name" value="{{ form.name.value|default:"" }}" maxlength="200" id="id_name">
+                    <label class="mt-2" for="id_image">Image:</label>
+                    <input class="form-control form-control-sm" type="file" name="image" accept="image/*" id="id_image">
+                    {% if form.image.value %}<a class="mt-2" target="_blank" href="{{ form.image.value.url }}">Current image.</a><br>{% endif %}
+                    <input type="submit" class="btn rounded-pill w-100 btn-success text-white mt-3" value="{% if form.name.value %}Update{% else %}Create{% endif %}">
+            </form>
+        </div>
+    </div>
+{% endblock content %}

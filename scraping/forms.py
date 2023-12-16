@@ -93,9 +93,16 @@ class CoverForm(forms.ModelForm):
 class AdvancedForm(forms.ModelForm):
     class Meta:
         model = Settings
-        fields = ("head", "script", 'ads')
+        fields = ("head", "script", "ads")
         widgets = {
             "head": forms.Textarea(attrs={"class": "form-control mb-2", "rows": 4}),
             "script": forms.Textarea(attrs={"class": "form-control mb-4", "rows": 4}),
             "ads": forms.TextInput(attrs={"class": "form-control my-2"}),
         }
+
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["name","image"]

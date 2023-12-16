@@ -28,6 +28,7 @@ def filename(instance, filename):
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to=filename, null=True, blank=True)
     slug = models.SlugField(max_length=200)
 
     def get_absolute_url(self):
