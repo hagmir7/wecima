@@ -3,7 +3,6 @@ from django.http.response import JsonResponse
 from base64 import encode
 from bs4 import BeautifulSoup
 import requests
-from django.contrib.auth.decorators import user_passes_test
 from .models import *
 from django.core.paginator import Paginator
 from .forms import *
@@ -20,10 +19,15 @@ except:
     settings = False
 
 
-def superuser_required(user):
-    if not user.is_superuser:
-        return Http404("The requested resource does not exist.")
-    return True
+def superuser_required(view_func):
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise Http404("The requested resource does not exist.")
+        if not request.user.is_authenticated:
+            return redirect("login")
+        return view_func(request, *args, **kwargs)
+
+    return _wrapped_view
 
 
 class AdsView(View):
@@ -34,15 +38,12 @@ class AdsView(View):
 # Home page
 def index(request):
     posts = Post.objects.all().order_by("-date")[0:24]
-    if settings:
-        title = settings.title
-    else:
-        title = "Blog Website Create by Freesad.com"
+    title = getattr(settings, 'name', 'Blog Website Create by Freesad.com')
     context = {"posts": posts, "title": title}
     return render(request, "index.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def dashobard(request):
     posts = Post.objects.filter(is_public=True).order_by("-date")
     users = User.objects.all()
@@ -64,10 +65,7 @@ def blog(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    if settings:
-        title = settings.name
-    else:
-        title = "No title yet"
+    title = getattr(settings, 'name', 'No title yet')
     context = {"posts": posts, "title": f"مواضيع - {title}"}
     return render(request, "blog.html", context)
 
@@ -95,7 +93,7 @@ def post(request, slug):
     return render(request, "post.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def create_category(request):
     if request.method == "POST":
         form = CategoryForm(request.POST, files=request.FILES)
@@ -109,7 +107,7 @@ def create_category(request):
     return render(request, "category/create.html", {"form": form})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def update_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
 
@@ -125,7 +123,7 @@ def update_category(request, slug):
     return render(request, "category/create.html", {"form": form, "category": category})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def delete_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     delete = category.delete()
@@ -137,7 +135,7 @@ def delete_category(request, slug):
         return redirect(request.META.get("HTTP_REFERER"))
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def list_category(request):
     content = Category.objects.all()
     paginator = Paginator(content, 40)  # Show 25 contacts per page.
@@ -147,7 +145,7 @@ def list_category(request):
     return render(request, "category/list.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def createPost(request):
     form = PostForm()
     if request.method == "POST":
@@ -159,7 +157,7 @@ def createPost(request):
     return render(request, "post/update.html", {"form": form})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def updatePost(request, id):
     post = get_object_or_404(Post, id=id)
     form = PostForm(instance=post)
@@ -175,7 +173,7 @@ def updatePost(request, id):
     return render(request, "post/update.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def deletePost(request, id):
     if request.user.is_superuser:
         post = Post.objects.get(id=id)
@@ -209,7 +207,7 @@ def search(request):
 
 
 # Get all users
-@user_passes_test(superuser_required)
+@superuser_required
 def users(request):
     content = User.objects.all().order_by("-date_joined")
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
@@ -219,7 +217,7 @@ def users(request):
     return render(request, "users/list.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def contactList(request):
     content = Contact.objects.all().order_by("-date")
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
@@ -229,7 +227,7 @@ def contactList(request):
     return render(request, "contact/list.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def contactDelete(request, id):
     contact = get_object_or_404(Contact, id=id)
     contact.delete()
@@ -240,7 +238,7 @@ def contactDelete(request, id):
 import datetime
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def contactRead(request, id):
     contact = get_object_or_404(Contact, id=id)
     contact.readed = datetime.datetime.now()
@@ -250,7 +248,7 @@ def contactRead(request, id):
 
 
 # Travel page
-@user_passes_test(superuser_required)
+@superuser_required
 def postList(request):
     content = Post.objects.all().order_by("-views")
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
@@ -260,7 +258,7 @@ def postList(request):
     return render(request, "post/list.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def PendingPosts(request):
     content = Post.objects.filter(is_public=False).order_by("-views")
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
@@ -278,13 +276,13 @@ def page(request, slug):
     return render(request, "page/page.html", {"page": page, "title": page.title})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def pages(request):
     pages = Page.objects.all().order_by("created")
     return render(request, "page/list.html", {"pages": pages, "title": "Pages"})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def createPage(request):
     form = FormCreatePage()
     if request.method == "POST" and request.user.is_superuser:
@@ -296,7 +294,7 @@ def createPage(request):
     return render(request, "page/create.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def updatePage(request, id):
     page = Page.objects.get(id=id)
     form = FormCreatePage(instance=page)
@@ -309,7 +307,7 @@ def updatePage(request, id):
     return render(request, "page/update.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def links(request):
     content = Link.objects.all().order_by("-created_at")
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
@@ -320,7 +318,7 @@ def links(request):
     return render(request, "configuration/links/list.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def create_link(request):
     if request.method == "POST":
         form = LinkForm(request.POST)
@@ -332,7 +330,7 @@ def create_link(request):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def link_delete(request, id):
     link = get_object_or_404(Link, id=id)
     if link:
@@ -343,7 +341,7 @@ def link_delete(request, id):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def link_update(request, id):
     link = get_object_or_404(Link, id=id)
     form = LinkForm(instance=link)
@@ -358,7 +356,7 @@ def link_update(request, id):
     return render(request, "configuration/links/update.html", {"form": form})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def site_info(request):
     settings = Settings.objects.last()
 
@@ -367,7 +365,6 @@ def site_info(request):
             form = SiteInfoForm(request.POST, request.FILES, instance=settings)
         else:
             form = SiteInfoForm(request.POST, request.FILES)
-
         if form.is_valid():
             form.save()
             messages.success(request, "Site info is updated successfully.")
@@ -379,7 +376,7 @@ def site_info(request):
     return render(request, "configuration/site/info.html", {"form": form})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def cover(request):
     settings = Settings.objects.last()
     if request.method == "POST":
@@ -398,7 +395,7 @@ def cover(request):
     return render(request, "configuration/site/cover.html", {"form": form})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def advanced(request):
     settings = Settings.objects.last()
     if request.method == "POST":
@@ -417,7 +414,7 @@ def advanced(request):
     return render(request, "configuration/site/advanced.html", {"form": form})
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def deletePage(request, id):
     page = Page.objects.get(id=id)
     if request.user.is_superuser:
@@ -433,21 +430,19 @@ def deletePage(request, id):
     return redirect("home")
 
 
-def lable(request, lable):
-    posts = Post.objects.filter(title__icontains=lable)
-    if settings:
-        title = settings.name
-    else:
-        title = "No title yet"
-    context = {"posts": posts, "title": f"{lable} - {title}"}
+def lable(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    posts = category.post_category.all()
+    
+    # Access the project's name from settings
+    title = getattr(settings, 'name', 'No title yet')
+
+    context = {"posts": posts, "title": f"{category.name}"}
     return render(request, "lable.html", context)
 
 
 def menu(request):
-    if settings:
-        title = settings.name
-    else:
-        title = "No title yet"
+    title = getattr(settings, 'name', 'No title yet')
 
     context = {"title": f"القائمة - {title}"}
     return render(request, "menu.html", context)
@@ -462,10 +457,7 @@ def contact(request):
             messages.success(request, "تم إرسال الرسالة")
             return redirect("contact")
 
-    if settings:
-        title = settings.name
-    else:
-        title = "لا يوجد عنوان"
+    title = getattr(settings, 'name', 'No title yet')
     context = {"form": form, "title": f"تواصل معنا - {title}"}
     return render(request, "contact/contact.html", context)
 
@@ -476,7 +468,7 @@ def postURL(request):
     return render(request, "urls.html", context)
 
 
-@user_passes_test(superuser_required)
+@superuser_required
 def deleteAll(request):
     posts = Post.objects.all()
     for post in posts:

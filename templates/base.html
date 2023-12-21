@@ -37,7 +37,47 @@
     {% endif %}
     <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@600&family=Rubik:wght@400;500&family=Ruwudu:wght@500&display=swap" rel="stylesheet">
     <link href="{% static "assets/css/theme-rtl.css" %}" rel="stylesheet" />
-    
+<style>
+  body {
+    background-image: linear-gradient(310deg, #2dce8912, #2dcecc17)
+  }
+
+  p {
+    font-size: 1.1em !important
+  }
+  .size-full {
+    margin-bottom: 12px
+  }
+
+  .bg-gradient-success {
+    background-image: linear-gradient(310deg, #2dce89, #2dcecc)
+  }
+
+  .img-content {
+    height: 220px;
+    width: 100%
+  }
+
+  .img-content img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover !important
+  }
+
+
+  @media (max-width:576px) {
+    .img-content {
+      height: auto;
+      width: 100%
+    }
+
+    .img-content img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain !important
+    }
+  }
+</style>
 
   </head>
   <body>

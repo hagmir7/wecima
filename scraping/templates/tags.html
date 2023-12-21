@@ -13,19 +13,7 @@
 </style>
 
 <div class="tags d-flex justify-content-between flex-wrap gap-1">
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/Python">Python</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/PHP">PHP</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/JavaScript">JavaScript</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/HTML">HTML</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/CSS">CSS</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/Java">Java</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/C++">C++</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/Laravel">Laravel</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/Django">Django</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/NodeJs">NodeJs</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/React">React</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/Vue">Vue</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/MySQL">MySQL</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/MongoDB">MongoDB</a>
-    <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/Flask">Flask</a>
+    {% for category in categories  %}
+     <a class="btn text-muted border-success rounded-pill btn-sm" href="/lable/{{ category.slug }}">{{ category.name }}</a>
+    {% endfor %}
 </div>
