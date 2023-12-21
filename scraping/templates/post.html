@@ -4,7 +4,12 @@
         <div class="row" style="height: auto !important;">
             <div class="col-12 col-md-7 col-lg-8 col-xl-8 mb-3 m-0 overflow-hidden mt-3" style="height: auto !important;">
                 <h1 dir="auto" class="blog-post-title rubik fw-bold h4 mt-2">{{ post.title}}</h1>
-                <p class="rubik">{{ post.description }}</p>
+                <p class="rubik pb-0 mb-0">{{ post.description }}</p>
+                <div class="rubik pb-2">
+                    {% for category in post.post_category.all %}
+                    <a href="/lable/{{ category.slug }}">{{ category.name }}</a>,
+                    {% endfor %}
+                </div>
                 {% if post.image %}
                 <img class="w-100 rounded border" src="{{ post.image.url }}" alt="{{ post.title }}">
                 {% endif %}
@@ -16,7 +21,6 @@
                 {% endfor %}
                 {% endif %}
                 <div class="rubik">{{ post.body|safe }}</div>
-                
                 {% if user.is_superuser   %}
                 <div class="mb-3">
                     <a class="btn btn-danger text-white me-2 rounded-pill bg-gradient-warnign" onclick="return confirm('Are you sur you want to delete Post.')" href="/post/delete/{{ post.id }}?post=true">Delete</a>
@@ -84,13 +88,13 @@
             </div>
             {% empty %}
             <div class="h3 py-5 my-5 text-center">
-                OOPS! No Post ({{title}})
+                لا يوجد منشور مطابق
             </div>
             {% endfor %}
             <div aria-label="Page navigation example ">
                 <ul class="pagination d-flex justify-content-center">
                     <li class="page-item ">
-                        <a href="/travel" class="btn rounded-pill mx-3 px-4 text-white bg-gradient-success">Load More</a>
+                        <a href="/articles" class="btn rounded-pill mx-3 px-4 text-white bg-gradient-success">مشاهدة المزيد</a>
                     </li>
                 </ul>
             </div>
