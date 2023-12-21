@@ -26,13 +26,13 @@
                 <div class="d-flex {% if post.next %} justify-content-between {% else %} justify-content-end {% endif %}">
                     {% if post.next %}
                     <div>
-                        <a href="/p/{{post.next.slug}}">← Previose </a><br>
+                        <a href="/p/{{post.next.slug}}">← السابق </a><br>
                          <a href="/p/{{post.next.slug}}">{{ post.next.title|truncatechars:50 }}</a>
                     </div>
                     {% endif %}
                     {% if post.pre %}
                     <div class="text-end">
-                        <a href="/p/{{post.pre.slug}}">Next → </a><br>
+                        <a href="/p/{{post.pre.slug}}">التالي → </a><br>
                         <a href="/p/{{post.pre.slug}}">{{ post.pre.title|truncatechars:50}}</a>
                     </div>
                     {% endif %}
@@ -40,15 +40,15 @@
             </div>
             <div class="col-12 col-md-5 col-lg-4 col-xl-4 position-relative" style="height: auto !important;">
                 <div class="position-sticky" style="top: 100px; height: auto !important;">
-                    <div class="p-2 mt-3 bg-light card border">
+                    {% comment %} <div class="p-2 mt-3 bg-light card border">
                         <img width="100%" src="https://media0033.elcinema.com/uploads/_315x420_caec9f69ae07ef38b3ef94713a6b2be8ba95b49a87985e35deacf54dd2d69960.jpg" alt="">
                         <a href="" class="btn btn-success mt-2">إعلان</a>
-                    </div>
+                    </div> {% endcomment %}
                     <div class="h5 mt-3 rubik fw-bold">كلمات مفتاحية</div>
                     {% include "tags.html" %}
 
-                    <div class="h5 mt-3 rubik fw-bold">تابعونا على</div>
-                    {% include "tags.html" %}
+                    {% comment %} <div class="h5 mt-3 rubik fw-bold">تابعونا على</div>
+                    {% include "tags.html" %} {% endcomment %}
                 </div>
             </div>
         </div>
