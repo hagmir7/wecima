@@ -38,7 +38,7 @@ class AdsView(View):
 # Home page
 def index(request):
     posts = Post.objects.all().order_by("-date")[0:24]
-    title = getattr(settings, 'name', 'Blog Website Create by Freesad.com')
+    title = getattr(settings, 'title', 'Blog Website Create by Freesad.com')
     context = {"posts": posts, "title": title}
     return render(request, "index.html", context)
 
@@ -65,7 +65,7 @@ def blog(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    title = getattr(settings, 'name', 'No title yet')
+    title = getattr(settings, 'title', 'No title yet')
     context = {"posts": posts, "title": f"مواضيع - {title}"}
     return render(request, "blog.html", context)
 
@@ -435,14 +435,14 @@ def lable(request, slug):
     posts = category.post_category.all()
     
     # Access the project's name from settings
-    title = getattr(settings, 'name', 'No title yet')
+    title = getattr(settings, 'title', 'No title yet')
 
     context = {"posts": posts, "title": f"{category.name}"}
     return render(request, "lable.html", context)
 
 
 def menu(request):
-    title = getattr(settings, 'name', 'No title yet')
+    title = getattr(settings, 'title', 'No title yet')
 
     context = {"title": f"القائمة - {title}"}
     return render(request, "menu.html", context)
@@ -457,7 +457,7 @@ def contact(request):
             messages.success(request, "تم إرسال الرسالة")
             return redirect("contact")
 
-    title = getattr(settings, 'name', 'No title yet')
+    title = getattr(settings, 'title', 'No title yet')
     context = {"form": form, "title": f"تواصل معنا - {title}"}
     return render(request, "contact/contact.html", context)
 
