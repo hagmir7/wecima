@@ -26,6 +26,14 @@ def filename(instance, filename):
         return None
 
 
+class IpModel(models.Model):
+    ip = models.GenericIPAddressField(protocol="IPv6")
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.id)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to=filename, null=True, blank=True)
@@ -51,7 +59,7 @@ class Post(models.Model):
     )
     image = models.ImageField(upload_to="Image", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    views = models.IntegerField(default=0)
+    views = models.ManyToManyField(IpModel, related_name="post_views", blank=True)
     tags = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     body = models.TextField()

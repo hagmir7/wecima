@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http.response import JsonResponse
-from base64 import encode
 from bs4 import BeautifulSoup
 import requests
 from .models import *
@@ -8,7 +7,6 @@ from django.core.paginator import Paginator
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
 from django.views import View
 from django.http import Http404
@@ -38,7 +36,7 @@ class AdsView(View):
 # Home page
 def index(request):
     posts = Post.objects.all().order_by("-date")[0:24]
-    title = getattr(settings, 'title', 'Blog Website Create by Freesad.com')
+    title = getattr(settings, "title", "Blog Website Create by Freesad.com")
     context = {"posts": posts, "title": title}
     return render(request, "index.html", context)
 
@@ -65,7 +63,7 @@ def blog(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    title = getattr(settings, 'title', 'No title yet')
+    title = getattr(settings, "title", "No title yet")
     context = {"posts": posts, "title": f"مواضيع - {title}"}
     return render(request, "blog.html", context)
 
@@ -74,9 +72,21 @@ def blog(request):
 def post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     posts = Post.objects.all().order_by("-date")[0:3]
-    # Add new viewer
-    post.views = post.views + 1
-    post.save()
+
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+
+    if not IpModel.objects.filter(ip=ip).exists():
+        location = IpModel.objects.create(ip=ip)
+    else:
+        location = IpModel.objects.get(ip=ip)
+
+    if not location in post.views.all():
+        post.views.add(location)
+        post.save()
 
     description = post.description if post.description else False
 
@@ -433,16 +443,16 @@ def deletePage(request, id):
 def lable(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts = category.post_category.all()
-    
+
     # Access the project's name from settings
-    title = getattr(settings, 'title', 'No title yet')
+    title = getattr(settings, "title", "No title yet")
 
     context = {"posts": posts, "title": f"{category.name}"}
     return render(request, "lable.html", context)
 
 
 def menu(request):
-    title = getattr(settings, 'title', 'No title yet')
+    title = getattr(settings, "title", "No title yet")
 
     context = {"title": f"القائمة - {title}"}
     return render(request, "menu.html", context)
@@ -457,7 +467,7 @@ def contact(request):
             messages.success(request, "تم إرسال الرسالة")
             return redirect("contact")
 
-    title = getattr(settings, 'title', 'No title yet')
+    title = getattr(settings, "title", "No title yet")
     context = {"form": form, "title": f"تواصل معنا - {title}"}
     return render(request, "contact/contact.html", context)
 
