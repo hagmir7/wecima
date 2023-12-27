@@ -31,7 +31,7 @@ class IpModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.ip)
 
 
 class Category(models.Model):
