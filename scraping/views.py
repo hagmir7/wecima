@@ -52,7 +52,7 @@ def dashobard(request):
         "users": users,
         "contacts": contacts,
         "pages": pages,
-        "title": "Dashobard",
+        "title": "لوحة التحكم",
     }
     return render(request, "dash.html", context)
 
@@ -109,7 +109,7 @@ def create_category(request):
         form = CategoryForm(request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Category created successfully.")
+            messages.success(request, "تم إنشاء الصنف بنجاح")
             return redirect(request.META.get("HTTP_REFERER"))
     else:
         form = CategoryForm()
@@ -125,7 +125,7 @@ def update_category(request, slug):
         form = CategoryForm(request.POST, request.FILES, instance=category)
         if form.is_valid():
             form.save()
-            messages.success(request, "Category updated successfully.")
+            messages.success(request, "تم تعديل الصنف بنجاح.")
             return redirect(request.META.get("HTTP_REFERER"))
     else:
         form = CategoryForm(instance=category)
@@ -138,7 +138,7 @@ def delete_category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     delete = category.delete()
     if delete:
-        messages.success(request, "Category deleted successfully.")
+        messages.success(request, "تم حذف المقال بنجاح.")
         return redirect("category_list")
     else:
         messages.warning(request, "Fail to delete category", extra_tags="danger")
@@ -162,9 +162,11 @@ def createPost(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, "Post created successfully.")
+            messages.success(request, "تم إنشاء المقال بنجاح")
             return redirect(request.META.get("HTTP_REFERER"))
-    return render(request, "post/update.html", {"form": form})
+    return render(
+        request, "post/update.html", {"form": form, "title": "إنشاء أو حذف المقال"}
+    )
 
 
 @superuser_required
@@ -177,7 +179,7 @@ def updatePost(request, id):
             form.save()
             post.is_public = False
             post.save()
-            messages.success(request, "Post updated successfully.")
+            messages.success(request, "تم تعديل المقال بنجاح.")
             return redirect(f"/p/{post.slug}")
     context = {"post": post, "form": form}
     return render(request, "post/update.html", context)
@@ -192,7 +194,7 @@ def deletePost(request, id):
         except:
             pass
         post.delete()
-        messages.success(request, "Post Deleted Succesfully..")
+        messages.success(request, "تم حذف المقال بنجاح.")
         if request.GET.get("post"):
             try:
                 return redirect(f"/p/{slug}")
@@ -223,7 +225,7 @@ def users(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     users = paginator.get_page(page_number)
-    context = {"users": users, "title": "All user"}
+    context = {"users": users, "title": "كل المتخدمين"}
     return render(request, "users/list.html", context)
 
 
@@ -233,7 +235,7 @@ def contactList(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     contacts = paginator.get_page(page_number)
-    context = {"contacts": contacts, "title": "New contacts"}
+    context = {"contacts": contacts, "title": "راسائل جديدة"}
     return render(request, "contact/list.html", context)
 
 
@@ -241,7 +243,7 @@ def contactList(request):
 def contactDelete(request, id):
     contact = get_object_or_404(Contact, id=id)
     contact.delete()
-    messages.success(request, "Contact deleted successfully.")
+    messages.success(request, "تم حدف الرسالة بنجاح.")
     return redirect(request.META.get("HTTP_REFERER"))
 
 
@@ -264,7 +266,7 @@ def postList(request):
     paginator = Paginator(content, 24)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    context = {"posts": posts, "title": "Public posts"}
+    context = {"posts": posts, "title": "مقالات عامة"}
     return render(request, "post/list.html", context)
 
 
@@ -289,7 +291,7 @@ def page(request, slug):
 @superuser_required
 def pages(request):
     pages = Page.objects.all().order_by("created")
-    return render(request, "page/list.html", {"pages": pages, "title": "Pages"})
+    return render(request, "page/list.html", {"pages": pages, "title": "الصفحات"})
 
 
 @superuser_required
@@ -324,7 +326,7 @@ def links(request):
     page_number = request.GET.get("page")
     links = paginator.get_page(page_number)
 
-    context = {"links": links, "title": "Configuration links"}
+    context = {"links": links, "title": "تعديل الروابط"}
     return render(request, "configuration/links/list.html", context)
 
 
@@ -334,7 +336,7 @@ def create_link(request):
         form = LinkForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Link created successfully..")
+            messages.success(request, "تم إنشاء الرابط بنجاح")
             return redirect(request.META.get("HTTP_REFERER"))
     messages.warning(request, "Fail to created link.")
     return redirect(request.META.get("HTTP_REFERER"))
@@ -345,9 +347,9 @@ def link_delete(request, id):
     link = get_object_or_404(Link, id=id)
     if link:
         link.delete()
-        messages.success(request, "Link deleted successfully..")
+        messages.success(request, "تم حدف الرابط")
         return redirect(request.META.get("HTTP_REFERER"))
-    messages.warning(request, "Fail to delete link.", extra_tags="danger")
+    messages.warning(request, "فشل حذف الروابط.", extra_tags="danger")
     return redirect(request.META.get("HTTP_REFERER"))
 
 
@@ -360,7 +362,7 @@ def link_update(request, id):
         form = LinkForm(request.POST, instance=link)
         if form.is_valid():
             form.save()
-            messages.success(request, "Link updated successfully.")
+            messages.success(request, "تم تعديل الربط.")
             return redirect(request.META.get("HTTP_REFERER"))
 
     return render(request, "configuration/links/update.html", {"form": form})

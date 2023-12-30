@@ -1,76 +1,84 @@
-<nav id="sidebar" class="sidebar js-sidebar">
-    <div class="sidebar-content js-simplebar">
+<nav id="sidebar" class="sidebar js-sidebar text-end">
+    <div class="sidebar-content js-simplebar text-end">
         <a class="sidebar-brand" href="/dashboard">
-            <span class="align-middle">{% if settings.name %}{{ settings.name }}{% else %}Site Name{% endif %}</span>
+            <span class="mx-1">{% if settings.name %}{{ settings.name }}{% else %}Site Name{% endif %}</span>
         </a>
 
         <ul class="sidebar-nav">
-            <li class="sidebar-header">
-                Pages
-            </li>
 
             <li class="sidebar-item active">
                 <a class="sidebar-link" href="/dashboard">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    <span class="mx-1">لوحة التحكم</span>
+                    <i class="fs-4 bi bi-sliders2-vertical"></i>
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{% url 'profile' user.username %}">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                </a>
-            </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/post/list/">
-                    <i class="align-middle" data-feather="sidebar"></i> <span class="align-middle">Posts</span>
+                    <span class="mx-1">مقالات</span>
+                    <i class="fs-4 bi bi-layout-text-window-reverse"></i>
                 </a>
             </li>
 
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{% url "list_category" %}">
-                    <i class="align-middle" data-feather="sidebar"></i> <span class="align-middle">category</span>
+                    <span class="mx-1">أصناف</span>
+                    <i class="fs-4 bi bi-tags"></i> 
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/users">
-                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
+                    <span class="mx-1">مستخدمون</span>
+                    <i class="fs-4 bi bi-person"></i>
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/pages">
-                    <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Pages</span>
+                    <span class="mx-1">صفحات</span>
+                    <i class="fs-4 bi bi-back"></i>
                 </a>
             </li>
 
             {% comment %} <li class="sidebar-item">
                 <a class="sidebar-link" href="/books/list">
-                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Books</span>
+                    <i class="mx-1" data-feather="book"></i> <span class="mx-1">Books</span>
                 </a>
             </li> {% endcomment %}
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/contact/list">
-                    <i class="align-middle" data-feather="message-circle"></i> <span class="align-middle">Contacts</span>
+                    <span class="mx-1">رسائل</span>
+                    <i class="fs-4 bi bi-chat-left-dots"></i>
                 </a>
             </li>
 
             <li class="sidebar-header">
-                Tools & Configurations
+                الأدوات و إعدادات
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="/settings">
-                    <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
+                    <span class="mx-1">إعدادات</span>
+                    <i class="fs-4 bi bi-gear"></i>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'profile' user.username %}">
+                    <span class="mx-1">الملف الشخصي</span>
+                    <i class="fs-4 bi bi-person-circle"></i>
+                    
                 </a>
             </li>
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{% url 'logout' %}">
-                    <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
+                    <span class="mx-1">خروج</span>
+                    <i class="fs-4 bi bi-box-arrow-right"></i> 
                 </a>
             </li>
         </ul>

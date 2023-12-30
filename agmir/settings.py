@@ -163,6 +163,9 @@ SUMMERNOTE_THEME = "bs4"  # set the Summernote theme
 SUMMERNOTE_CONFIG = {
     "width": "100%",
     "height": "400px",
+    "upload_to": "uploads/",
+    "dir": "rtl",
+    "lang" : 'ar'
 }  # set the Summernote configuration options
 
 

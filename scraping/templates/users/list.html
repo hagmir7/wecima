@@ -8,10 +8,10 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Full name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">الإسم الكامل</th>
+                    <th scope="col">الربيد الإلكتروني</th>
+                    <th scope="col">تاريخ الإنضمام</th>
+                    <th scope="col">تفاعل</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -22,7 +22,7 @@
                     <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
                     <td>{{ user.date_joined|date:"M. d,Y" }}</td>
                     <td class="d-flex">
-                        <a class="btn mx-1 btn-sm btn-danger" href="/user/delete/{{user.id}}" onclick="return alert('Are you sur you want to delete')">Delete</a>
+                        <a class="btn mx-1 btn-sm btn-danger" href="/user/delete/{{user.id}}" onclick="return alert('Are you sur you want to delete')">حذف</a>
                         {% comment %} <a class="btn mx-1 btn-sm btn-success" href="/user/update/{{user.id}}">Update</a> {% endcomment %}
                     </td>
                   </tr>

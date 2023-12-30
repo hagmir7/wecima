@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col mt-0">
-                                    <h5 class="card-title">Posts</h5>
+                                    <h5 class="card-title">مقالات</h5>
                                 </div>
                                 <div class="col-auto">
                                     <div class="stat text-primary">
@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col mt-0">
-                                    <h5 class="card-title">Users</h5>
+                                    <h5 class="card-title">مستخدمون</h5>
                                 </div>
 
                                 <div class="col-auto">
@@ -45,7 +45,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col mt-0">
-                                    <h5 class="card-title">Pages</h5>
+                                    <h5 class="card-title">صفحات</h5>
                                 </div>
 
                                 <div class="col-auto">
@@ -61,7 +61,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col mt-0">
-                                    <h5 class="card-title">Contacts</h5>
+                                    <h5 class="card-title">رسائل</h5>
                                 </div>
 
                                 <div class="col-auto">
@@ -82,7 +82,8 @@
         <div class="card flex-fill w-100">
             <div class="card-header">
 
-                <h5 class="card-title mb-0">Recent Movement</h5>
+                <h5 class="card-title mb-0">تطورات أخر سبع أيام
+                </h5>
             </div>
             <div class="card-body py-3">
                 <div class="chart chart-sm">
@@ -97,28 +98,28 @@
     <div class="col-12 col-lg-12 col-xxl-12 d-flex">
         <div class="card flex-fill">
             <div class="card-header">
-                <h5 class="card-title mb-0">New Privet Posts</h5>
+                <h5 class="card-title mb-0">مقالات جيدية</h5>
             </div>
             <table class="table table-hover my-0">
                 <thead>
                     <tr>
-                        <th>Post title</th>
-                        <th class="d-none d-xl-table-cell">Category</th>
-                        <th class="d-none d-xl-table-cell">Created date</th>
-                        <th>Status</th>
-                        <th class="d-none d-md-table-cell">Actions</th>
+                        <th>العنوان</th>
+                        <th class="d-none d-xl-table-cell">مشاهدة</th>
+                        <th class="d-none d-xl-table-cell">تاريخ الإنشاء</th>
+                        <th>الحالة</th>
+                        <th class="d-none d-md-table-cell">تفاعل</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for post in posts|slice:"10" %}
                     <tr>
                         <td>{{ post.title }}</td>
-                        <td class="d-none d-xl-table-cell">{{ post.category }}</td>
+                        <td class="d-none d-xl-table-cell">{{ post.views.all.count }}</td>
                         <td class="d-none d-xl-table-cell">{{ post.date|date:"m/d/Y" }}</td>
                         {% if post.public  %}
-                            <td><span class="badge bg-success">Public</span></td>
+                            <td><span class="badge bg-success">عام</span></td>
                         {% else %}
-                            <td><span class="badge bg-warning">Privet</span></td>
+                            <td><span class="badge bg-warning">خاص</span></td>
                         {% endif %}
                         <td class="d-none d-md-table-cell">
                             <a class="btn btn-sm py-1 btn-info" href="/p/{{ post.slug }}">
@@ -127,7 +128,7 @@
                             <a class="btn btn-sm py-1 btn-success" href="/post/update/{{ post.id }}">
                                 <i class="align-middle" data-feather="edit"></i>
                             </a>
-                            <a class="btn btn-sm py-1 btn-danger" onclick="return confirm('Are you sur you want to delete?')" href="/post/delete/{{ post.id }}">
+                            <a class="btn btn-sm py-1 btn-danger" onclick="return confirm('هل أنت متأكد من حذف المقال?')" href="/post/delete/{{ post.id }}">
                                 <i class="align-middle" data-feather="trash"></i>
                             </a>
                         </td>

@@ -27,6 +27,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("title", "category", "description", "image", "tags", "body")
+        widgets = {
+            "category": forms.SelectMultiple(attrs={"class": "form-control mb-2"}),
+        }
 
 
 class LinkForm(forms.ModelForm):
@@ -101,8 +104,7 @@ class AdvancedForm(forms.ModelForm):
         }
 
 
-
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ["name","image"]
+        fields = ["name", "image"]

@@ -2,7 +2,6 @@
 {% block content %}
 <div class="row justify-content-center">
         <div class="col-md-10 p-3 card rounded border shadow-sm">
-            <h1 class="h3 my-2">Create & Update  Post</h1>
             {% if messages %}
                 {% for message in messages %}
                 <div {% if message.tags %} class="alert p-2 mt-2 alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
@@ -10,23 +9,24 @@
             {% endif %}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                    <label class="mt-2" for="id_title">Title:</label>
+                    <label class="mt-2" for="id_title">العنوان :</label>
                     <input class="form-control form-control-sm" type="text" name="title" value="{{ form.title.value|default:"" }}" maxlength="200" id="id_title">
 
                 
-                    <label class="mt-2" for="id_image">Image:</label>
+                    <label class="mt-2" for="id_image">الصورة :</label>
                     <input class="form-control form-control-sm" type="file" name="image" accept="image/*" id="id_image">
-                    {% if form.image.value %}<a class="mt-2" target="_blank" href="{{ form.image.value.url }}">Current image.</a><br>{% endif %}
+                    {% if form.image.value %}<a class="mt-2" target="_blank" href="{{ form.image.value.url }}">الصورة الحالية .</a><br>{% endif %}
+                    <label class="mt-2" for="id_tags"> الصنف :</label>
                     {{ form.category }}
-                    <label class="mt-2" for="id_tags">Tags:</label>
+                    <label class="mt-2" for="id_tags">كلمات مفتاحية :</label>
                     <input class="form-control form-control-sm" type="text" name="tags" value="{{ form.tags.value|default:"" }}" maxlength="100" id="id_tags">
 
-                    <label class="mt-2" for="id_description">Description:</label>
+                    <label class="mt-2" for="id_description">الوصف :</label>
                     <textarea class="form-control" name="description" cols="40" rows="5" id="id_description">{{ form.description.value|default:"" }}</textarea>
 
-                    <label class="mt-2" for="id_body">Body:</label>
+                    <label class="mt-2" for="id_body">المقال:</label>
                     {{ form.body }}
-                <input type="submit" class="btn rounded-pill w-100 btn-success text-white mt-3" value="Update">
+                    <input type="submit" class="btn rounded-pill w-100 btn-success text-white mt-3" value="إنشـــــاء">
             </form>
         </div>
     </div>

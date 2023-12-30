@@ -6,16 +6,16 @@
  <main id="main" class="main">
     <div class="row d-flex justify-content-center">
         <div class="col-md-8 ">
-            <h1 class="h4">Personal</h1>
+            <h1 class="h4">{% trans "الإعدادات الشخصية" %}</h1>
             <ul class="list-group list-group-numbered text-dark">
                 <li class="list-group-item d-flex">
                     <a href="{% url 'profile_update' user.id %}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-user mr-2"></span>
-                                <strong>{% trans "Profile" %}</strong>
+                                <strong>{% trans "الملف الشخصي" %}</strong>
                             </div>
-                            {% trans "Change your Avatar, Phone, Country..." %}
+                            {% trans "تغير صورة الشخصية, رقم الهاتف, الدولة..." %}
                         </div>
                     </a>
                 </li>
@@ -24,9 +24,9 @@
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-suitcase mr-2"></span>
-                                <strong>{% trans "Contact Info" %}</strong>
+                                <strong>{% trans "معلومات الإتصال" %}</strong>
                             </div>
-                            {% trans "Change your Username, Email..." %}
+                            {% trans "تغير اسم المتخدم, البريد الإلكتورني..." %}
                         </div>
                     </a>
                 </li>
@@ -35,8 +35,8 @@
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-lock mr-2"></span>
-                                <strong>{% trans "Password" %}</strong></div>
-                            {% trans "Change your password." %}
+                                <strong>{% trans "كلمة المرور" %}</strong></div>
+                            {% trans "تغيير كلمة المرور." %}
                         </div>
                     </a>
                 </li>
@@ -44,16 +44,16 @@
         </div>
 
         <div class="col-md-8 mt-3">
-            <h1 class="h4">Configuration</h1>
+            <h1 class="h4">الإعدادات  المتقدمة</h1>
             <ul class="list-group list-group-numbered text-dark">
                 <li class="list-group-item d-flex">
                     <a href="{% url "cover" %}">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-user mr-2"></span>
-                                <strong>{% trans "Update cover" %}</strong>
+                                <strong>{% trans "تعديل الغلاف" %}</strong>
                             </div>
-                            {% trans "Cover image, title, description..." %}
+                            {% trans "صورة الغلاف, العنوان, الوصف." %}
                         </div>
                     </a>
                 </li>
@@ -62,9 +62,9 @@
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-suitcase mr-2"></span>
-                                <strong>{% trans "Site info" %}</strong>
+                                <strong>{% trans "معلومات الموقع" %}</strong>
                             </div>
-                            {% trans "Site logo, name, description..." %}
+                            {% trans "أيقونة الموقع, إسم الموقع, عنوان الموقع." %}
                         </div>
                     </a>
                 </li>
@@ -73,8 +73,8 @@
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-lock mr-2"></span>
-                                <strong>{% trans "Links" %}</strong></div>
-                            {% trans "Links footer, header..." %}
+                                <strong>{% trans "الروابط" %}</strong></div>
+                            {% trans "روابط  Footer, Header." %}
                         </div>
                     </a>
                 </li>
@@ -84,8 +84,8 @@
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">
                                 <span class="fa fa-lock mr-2"></span>
-                                <strong>{% trans "Advanced" %}</strong></div>
-                            {% trans "Tags for head, script..." %}
+                                <strong>{% trans "متقدم" %}</strong></div>
+                            {% trans "كود JavaScript, CSS..." %}
                         </div>
                     </a>
                 </li>
